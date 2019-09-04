@@ -132,7 +132,7 @@ public class Registration extends AppCompatActivity {
                                 }
 
                             } else if (status.equals("500")) {
-
+                                Toast.makeText(Registration.this, "Error", Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (JSONException e) {
