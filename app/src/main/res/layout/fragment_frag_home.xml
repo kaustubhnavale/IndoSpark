@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FragHome">
+
+    <LinearLayout
+        android:background="@color/backGrey"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <RelativeLayout
+            android:id="@+id/rlSearch"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp">
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:background="@android:color/transparent"
+                android:id="@+id/itemTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_toLeftOf="@+id/btnMore"
+                android:hint="Search Product ..."
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:padding="5dp"
+                android:id="@+id/btnMore"
+                android:layout_width="35dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/search"/>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="7.5"
+            android:src="@drawable/banerimage" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/my_recycler_view1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5"
+            android:scrollbars="none" />
+
+        <LinearLayout
+            android:id="@+id/llNoInternet"
+            android:visibility="gone"
+            android:background="@color/white"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/no_internet"/>
+
+            <TextView
+                android:layout_margin="20dp"
+                android:textSize="20dp"
+                android:textColor="@color/themecolor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No Internet"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

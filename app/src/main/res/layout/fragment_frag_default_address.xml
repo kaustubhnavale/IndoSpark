@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FragDefaultAddress">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backGrey"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="9"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Address Book"
+                android:textColor="@color/textcolor"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Shipping Address (Default)"
+                        android:textColor="@color/textcolor"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:scaleType="fitXY"
+                        android:id="@+id/tvViewAllShipping"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/borderlayout"
+                        android:gravity="right"
+                        android:text="  View All  "
+                        android:textColor="@color/themecolor" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/llShippingAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:textSize="18dp"
+                        android:id="@+id/tvDefShipName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name" />
+
+                    <TextView
+                        android:textSize="18dp"
+                        android:id="@+id/tvDefShipComp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Company Name" />
+
+                    <TextView
+                        android:textSize="18dp"
+                        android:id="@+id/tvDefShipAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Address" />
+
+                    <TextView
+                        android:textSize="18dp"
+                        android:id="@+id/tvDefShipTele"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="T : " />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llNoShippingAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="10">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="15dp"
+                        android:layout_weight="2"
+                        android:src="@drawable/emptyshippingaddressicon" />
+
+                    <TextView
+                        android:id="@+id/tvAddShipping"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="8"
+                        android:background="@drawable/borderlayout"
+                        android:gravity="center"
+                        android:text="Add New Address"
+                        android:textColor="@color/themecolor"
+                        android:textSize="18dp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Billing Address (Default)"
+                        android:textColor="@color/textcolor"
+                        android:textSize="18dp" />
+
+                    <TextView
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:scaleType="fitXY"
+                        android:id="@+id/tvViewAllBilling"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/borderlayout"
+                        android:gravity="right"
+                        android:text="  View All  "
+                        android:textColor="@color/themecolor" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/llBillingAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:textSize="18dp"
+                        android:id="@+id/tvDefBillName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name" />
+
+                    <TextView
+                        android:textSize="18dp"
+                        android:id="@+id/tvDefBillCompany"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Company Name" />
+
+                    <TextView
+                        android:textSize="18dp"
+                        android:id="@+id/tvDefBillAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Address" />
+
+                    <TextView
+                        android:textSize="18dp"
+                        android:id="@+id/tvDefBillTele"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="T : " />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llNoBillingAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="10">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="15dp"
+                        android:layout_weight="2"
+                        android:src="@drawable/emptybillingaddressicon" />
+
+                    <TextView
+                        android:id="@+id/tvAddBilling"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="8"
+                        android:background="@drawable/borderlayout"
+                        android:gravity="center"
+                        android:text="Add New Address"
+                        android:textColor="@color/themecolor"
+                        android:textSize="18dp" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

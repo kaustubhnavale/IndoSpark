@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/inDialogQtyClose"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="Select From Your Previous Order"
+        android:textColor="@color/textcolor"
+        android:textSize="18dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvAddListSet"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="horizontal"
+            android:scrollbars="horizontal" />
+
+        <LinearLayout
+            android:id="@+id/llAddAddress"
+            android:layout_gravity="center"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@color/textcolor">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1.5dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textColor="@color/textcolor"
+                    android:padding="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add New Address" />
+
+                <ImageView
+                    android:visibility="gone"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/add" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>

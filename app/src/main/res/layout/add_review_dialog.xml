@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="Add Review"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:background="@color/themecolor"
+        android:textColor="@color/white"
+        android:id="@+id/inDialogQtyClose"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textSize="18dp"
+        android:textColor="@color/textcolor"
+        android:id="@+id/tvProdName"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/themecolor" />
+
+    <EditText
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etReviewName"
+        android:hint="Name"/>
+
+    <EditText
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etReviewTitle"
+        android:hint="Title"/>
+
+    <EditText
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etReviewDetail"
+        android:hint="Detail"/>
+
+    <Button
+        android:id="@+id/btnSubmitDialogReview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/themecolor"
+        android:textColor="@color/white"
+        android:layout_marginBottom="30dp"
+        android:text="SUBMIT"/>
+
+</LinearLayout>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FragAddAddress">
+
+    <LinearLayout
+        android:background="@color/backGrey"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <LinearLayout
+            android:background="@color/white"
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4.5">
+
+            <TextView
+                android:gravity="center"
+                android:textColor="@color/textcolor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Add Address"
+                android:textSize="18dp"/>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_margin="10dp"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <EditText
+                    android:nextFocusDown="@+id/etEmail"
+                    android:singleLine="true"
+                    android:inputType="phone"
+                    android:id="@+id/etContact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Contact No *" />
+
+                <EditText
+                    android:nextFocusDown="@+id/etFNM"
+                    android:singleLine="true"
+                    android:inputType="textEmailAddress"
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email ID *" />
+
+                <EditText
+                    android:nextFocusDown="@+id/etLNM"
+                    android:singleLine="true"
+                    android:id="@+id/etFNM"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="First Name *" />
+
+                <EditText
+                    android:nextFocusDown="@+id/etCompNM"
+                    android:singleLine="true"
+                    android:id="@+id/etLNM"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Last Name *" />
+
+                <EditText
+                    android:nextFocusDown="@+id/etStreetAdd"
+                    android:singleLine="true"
+                    android:id="@+id/etCompNM"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Company Name *" />
+
+                <EditText
+                    android:nextFocusDown="@+id/etCity"
+                    android:singleLine="true"
+                    android:id="@+id/etStreetAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Street Address *" />
+
+                <EditText
+                    android:nextFocusDown="@+id/etState"
+                    android:singleLine="true"
+                    android:id="@+id/etCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="City *" />
+
+                <EditText
+                    android:nextFocusDown="@+id/etPinCode"
+                    android:singleLine="true"
+                    android:id="@+id/etState"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="State *" />
+
+                <Spinner
+                    android:background="@drawable/bg_spinner"
+                    android:layout_marginTop="10dp"
+                    android:layout_margin="5dp"
+                    android:id="@+id/spinState"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:nextFocusDown="@+id/etCountry"
+                    android:singleLine="true"
+                    android:inputType="number"
+                    android:id="@+id/etPinCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Pin Code *" />
+
+                <EditText
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"
+                    android:id="@+id/etCountry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Country *" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:background="@color/themecolor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4.5">
+
+            <TextView
+                android:id="@+id/tvAddAddress"
+                android:gravity="center"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Add" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

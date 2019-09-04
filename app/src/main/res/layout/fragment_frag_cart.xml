@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGrey"
+    tools:context=".FragCart">
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/llFilledCart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Your Cart"
+                    android:textColor="@color/textcolor"
+                    android:textSize="18dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/themecolor" />
+
+                <TextView
+                    android:id="@+id/tvCoupenText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Do You Have Coupen Code?"
+                    android:textColor="@color/themecolor" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toStartOf="@+id/tvCartCount"
+                        android:layout_toLeftOf="@+id/tvCartCount"
+                        android:text="Total Item in Cart:"
+                        android:textColor="@color/textcolor"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvCartCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/cancel"
+                        android:text="2"
+                        android:textColor="@color/themecolor"
+                        android:textSize="15dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toStartOf="@+id/tvCartSubTotal"
+                        android:layout_toLeftOf="@+id/tvCartSubTotal"
+                        android:text="Cart Subtotal:"
+                        android:textColor="@color/textcolor"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvCartSubTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/cancel"
+                        android:text="2"
+                        android:textColor="@color/themecolor"
+                        android:textSize="15dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toStartOf="@+id/tvShippingCharges"
+                        android:layout_toLeftOf="@+id/tvShippingCharges"
+                        android:text="Shipping Charges:"
+                        android:textColor="@color/textcolor"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvShippingCharges"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/cancel"
+                        android:text="2"
+                        android:textColor="@color/themecolor"
+                        android:textSize="15dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp">
+
+                    <TextView
+                        android:id="@+id/tvCouponCodeTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toStartOf="@+id/tvCoupenCode"
+                        android:layout_toLeftOf="@+id/tvCoupenCode"
+                        android:text="Coupen Code :"
+                        android:textColor="@color/textcolor"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvCoupenCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/cancel"
+                        android:text="0"
+                        android:textColor="@color/themecolor"
+                        android:textSize="15dp" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/themecolor" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_margin="5dp"
+                        android:layout_toStartOf="@+id/tvOrderTotla"
+                        android:layout_toLeftOf="@+id/tvOrderTotla"
+                        android:text="Order Total:"
+                        android:textColor="@color/textcolor"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tvOrderTotla"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="5dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/cancel"
+                        android:text="2"
+                        android:textColor="@color/themecolor"
+                        android:textSize="18dp" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvCartList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:scrollbars="vertical" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvCartProceed"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:background="@color/themecolor"
+            android:gravity="center"
+            android:text="Proceed To Checkout"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_margin="10dp"
+        android:background="@color/white"
+        android:id="@+id/llEmptyCartList"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/emptycarticon" />
+
+        <TextView
+            android:textColor="#000000"
+            android:textSize="18dp"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unfortunately, Your Cart is Empty"/>
+
+        <TextView
+            android:textSize="16dp"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please Add Something in Your Cart"/>
+
+        <TextView
+            android:id="@+id/tvContinueShopping"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/themecolor"
+            android:gravity="center"
+            android:layout_margin="15dp"
+            android:text="Continue Shopping"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:padding="5dp"/>
+
+    </LinearLayout>
+
+</FrameLayout>

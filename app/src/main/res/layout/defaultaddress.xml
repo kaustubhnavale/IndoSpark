@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/inDialogQtyClose"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/themecolor"
+        android:gravity="center"
+        android:text="Select Address Type"
+        android:textColor="@color/white"
+        android:textSize="18dp" />
+
+    <RadioGroup
+        android:layout_gravity="center"
+        android:id="@+id/rgDefaultAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:checked="true"
+            android:id="@+id/rbShipping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shipping Address" />
+
+        <RadioButton
+            android:id="@+id/rbBilling"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Billing Address" />
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/tvSetDefault"
+            android:textColor="@color/themecolor"
+            android:padding="10dp"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="SET" />
+
+        <TextView
+            android:id="@+id/tvCancelDefault"
+            android:textColor="@color/themecolor"
+            android:padding="10dp"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="CANCEL" />
+
+    </LinearLayout>
+
+</LinearLayout>

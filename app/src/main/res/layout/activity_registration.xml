@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGrey"
+    android:orientation="vertical"
+    tools:context=".Registration">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/logo" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:text="Register"
+            android:textColor="@color/textcolor"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/etRegUserNme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:hint="Email ID *"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/etRegPassowrd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:hint="Password *"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/etRegConfirmPassowrd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:hint="Confirm Password *"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/etRegFirstNm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nextFocusDown="@+id/tvRegSubmit"
+            android:singleLine="true"
+            android:layout_margin="5dp"
+            android:hint="First Name *" />
+
+        <EditText
+            android:id="@+id/etRegLastNm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:hint="Last Name *" />
+
+        <TextView
+            android:id="@+id/tvRegSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/borderlayout"
+            android:gravity="center"
+            android:text="Submit"
+            android:textColor="@color/themecolor"
+            android:textSize="22dp" />
+
+    </LinearLayout>
+</LinearLayout>
