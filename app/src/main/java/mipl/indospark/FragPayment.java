@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -121,7 +120,6 @@ public class FragPayment extends Fragment {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.i("response", response);
                         myDialogPlaceOrder.dismiss();
 
                         try {
@@ -131,9 +129,11 @@ public class FragPayment extends Fragment {
 
                             String[] separated = response.split("\"");
                             payID = separated[1];
-                            String status = separated[2];
+//                            String status = separated[2];
 
-                            if (status.equals("1")) {
+                            get_RSA_key();
+
+                            /*if (status.equals("1")) {
 //                                placePayment(payID);
 //                                wvPayPage.loadUrl("http://shop.indospark.com/android_api/paypage.php?order_id=" + payID);
                                 get_RSA_key();
@@ -141,7 +141,7 @@ public class FragPayment extends Fragment {
                             } else {
                                 Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
                                 getActivity().getSupportFragmentManager().popBackStack();
-                            }
+                            }*/
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -182,8 +182,6 @@ public class FragPayment extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-                        Log.i("response", response);
 
                         if (response.contains("ccavRequestHandler.php")){
 
@@ -367,7 +365,6 @@ public class FragPayment extends Fragment {
                 }
             });
 
-
             try {
                 String postData = AvenuesParams.ACCESS_CODE + "=" + URLEncoder.encode(AvenuesParams.access_code_key, "UTF-8") + "&" +
                         AvenuesParams.MERCHANT_ID + "=" + URLEncoder.encode(AvenuesParams.merchant_id_key, "UTF-8") + "&" +
@@ -380,7 +377,6 @@ public class FragPayment extends Fragment {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-
         }
     }
 }

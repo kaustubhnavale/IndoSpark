@@ -235,7 +235,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_toStartOf="@+id/tvCoupenCode"
                         android:layout_toLeftOf="@+id/tvCoupenCode"
-                        android:text="Coupen Code :"
+                        android:text="Coupon Code :"
                         android:textColor="@color/textcolor"
                         android:textSize="15sp" />
 

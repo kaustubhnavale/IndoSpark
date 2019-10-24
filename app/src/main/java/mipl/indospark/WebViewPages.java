@@ -18,7 +18,7 @@ public class WebViewPages extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view_pages);
 
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.themecolor)));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.actionbar)));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         wvPages = (WebView) findViewById(R.id.wvPages);
@@ -43,6 +43,8 @@ public class WebViewPages extends AppCompatActivity {
             wvPages.loadUrl("https://shop.indospark.com/terms-and-condition");
         } else if (page.equals("Privacy Policy")) {
             wvPages.loadUrl("https://shop.indospark.com/privacy-policy");
+        } else if (page.equals("Live Chat")) {
+            wvPages.loadUrl("https://chemicalanchors.in/support/index.php");
         }
 
         progressBar = new ProgressDialog(WebViewPages.this);

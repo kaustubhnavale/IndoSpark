@@ -134,7 +134,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     i.putExtra("WebView", "Contact Us");
                     v.getContext().startActivity(i);
 
-                } else if (headerName.equals("Terms and Condition")) {
+                } else if (headerName.equals("Terms and Conditions")) {
                     Intent i = new Intent(mContext, WebViewPages.class);
                     i.putExtra("WebView", "Terms and Condition");
                     v.getContext().startActivity(i);
@@ -142,6 +142,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 } else if (headerName.equals("Privacy Policy")) {
                     Intent i = new Intent(mContext, WebViewPages.class);
                     i.putExtra("WebView", "Privacy Policy");
+                    v.getContext().startActivity(i);
+
+                } else if (headerName.equals("Live Chat")) {
+                    Intent i = new Intent(mContext, WebViewPages.class);
+                    i.putExtra("WebView", "Live Chat");
                     v.getContext().startActivity(i);
 
                 } else if (headerName.equals("Address Book")) {
@@ -233,14 +238,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     String key = entry.getKey();
                     String value = entry.getValue();
 
-                    /*if (key.equals(childText)) {
-                        Toast.makeText(mContext, value, Toast.LENGTH_SHORT).show();
-                    }*/
-
                     if (key.equals(childText)) {
-                        /*Intent intent = new Intent(mContext, AllProducts.class);
-                        intent.putExtra("catID", value);
-                        mContext.startActivity(intent);*/
 
                         Bundle bundle=new Bundle();
                         bundle.putString("catID", value);
@@ -255,8 +253,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                         }
                         ft.add(R.id.fragDrower, fragobj,FragCatProdList.class.getCanonicalName())
                                 .addToBackStack(FragCatProdList.class.getCanonicalName()).commit();
-
-//                        ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragDrower, fragobj, "SOMETAG").addToBackStack("Indo").commit();
 
                         Drower.closeDrawer();
                     }

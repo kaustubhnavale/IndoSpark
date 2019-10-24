@@ -50,20 +50,11 @@ public class RecyclerViewDataAdapter extends RecyclerView.Adapter<RecyclerViewDa
             @Override
             public void onClick(View v) {
 
-//                Toast.makeText(v.getContext(), sectionID, Toast.LENGTH_SHORT).show();
-
-               /* Intent intent = new Intent(mContext, AllProducts.class);
-                intent.putExtra("catID", sectionID);
-                mContext.startActivity(intent);*/
-
                 Bundle bundle=new Bundle();
                 bundle.putString("catID", sectionID);
                 //set Fragmentclass Arguments
                 FragCatProdList fragobj=new FragCatProdList();
                 fragobj.setArguments(bundle);
-
-                /*((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragDrower, fragobj, "SOMETAG")
-                        .addToBackStack("Indo").commit();*/
 
                 android.support.v4.app.FragmentManager fm = ((FragmentActivity)mContext).getSupportFragmentManager();
                 android.support.v4.app.FragmentTransaction ft=fm.beginTransaction();

@@ -33,21 +33,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etReviewName"
-        android:hint="Name"/>
+        android:hint="Name *"/>
 
     <EditText
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etReviewTitle"
-        android:hint="Title"/>
+        android:hint="Title *"/>
 
     <EditText
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etReviewDetail"
-        android:hint="Detail"/>
+        android:hint="Detail *"/>
 
     <Button
         android:id="@+id/btnSubmitDialogReview"

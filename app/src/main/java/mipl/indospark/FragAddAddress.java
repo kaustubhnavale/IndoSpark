@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,29 +73,34 @@ public class FragAddAddress extends Fragment {
         spinState = (Spinner) v.findViewById(R.id.spinState);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, states);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown);
         spinState.setAdapter(adapter);
 
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            // handle your code here.
-            AddID = getArguments().getString("AddID");
+        try {
+            Bundle bundle = this.getArguments();
+            if (bundle != null) {
+                // handle your code here.
+                AddID = getArguments().getString("AddID");
 
-            if (AddID != null) {
-                if (AddID.equals("New")) {
-                    Amount = getArguments().getString("Amount");
-                } else {
-                    tvAddAddress.setText("Update");
-                    etContact.setText(getArguments().getString("Telephone"));
-                    etEmail.setText(getArguments().getString("Email"));
-                    etFNM.setText(getArguments().getString("Firstname"));
-                    etLNM.setText(getArguments().getString("Lastname"));
-                    etCompNM.setText(getArguments().getString("Company"));
-                    etStreetAdd.setText(getArguments().getString("Street"));
-                    etCity.setText(getArguments().getString("City"));
-                    etPinCode.setText(getArguments().getString("Postcode"));
-                    etCountry.setText(getArguments().getString("Region"));
+                if (AddID != null) {
+                    if (AddID.equals("New")) {
+                        Amount = getArguments().getString("Amount");
+                    } else {
+                        tvAddAddress.setText("Update");
+                        etContact.setText(getArguments().getString("Telephone"));
+                        etEmail.setText(getArguments().getString("Email"));
+                        etFNM.setText(getArguments().getString("Firstname"));
+                        etLNM.setText(getArguments().getString("Lastname"));
+                        etCompNM.setText(getArguments().getString("Company"));
+                        etStreetAdd.setText(getArguments().getString("Street"));
+                        etCity.setText(getArguments().getString("City"));
+                        etPinCode.setText(getArguments().getString("Postcode"));
+                        etCountry.setText(getArguments().getString("Region"));
+                    }
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         tvAddAddress.setOnClickListener(new View.OnClickListener() {
@@ -134,8 +138,6 @@ public class FragAddAddress extends Fragment {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.i("response", response);
-
                         JSONObject reader = null;
                         try {
                             reader = new JSONObject(response);
@@ -162,7 +164,6 @@ public class FragAddAddress extends Fragment {
 //                                            .addToBackStack(FragCart.class.getCanonicalName())
                                             .commit();
 
-
                                 } else {
                                     android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
                                     android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
@@ -179,7 +180,6 @@ public class FragAddAddress extends Fragment {
                         }
 
                         myDialog1.dismiss();
-
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -189,11 +189,6 @@ public class FragAddAddress extends Fragment {
                 myDialog1.dismiss();
             }
         }) {
-
-            /*@Override
-            public String getBodyContentType() {
-                return "application/x-www-form-urlencoded";
-            }*/
 
             @Override
             protected Map<String, String> getParams() {
@@ -228,8 +223,6 @@ public class FragAddAddress extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-                        Log.i("response", response);
 
                         JSONObject reader = null;
                         try {

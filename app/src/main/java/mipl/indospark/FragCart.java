@@ -17,13 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,7 +53,7 @@ public class FragCart extends Fragment {
     TextView tvCoupenText, tvCartProceed, tvContinueShopping;
     TextView tvCartCount, tvCartSubTotal, tvShippingCharges, tvCoupenCode, tvOrderTotla, tvCouponCodeTitle;
     LinearLayout llEmptyCartList, llFilledCart;
-    float orderTotal = 0;
+    int orderTotal = 0;
     int subTotal = 0;
 
     SharedPreferences sharedpreferences;
@@ -114,7 +111,7 @@ public class FragCart extends Fragment {
                             dialog.dismiss();
 
                         } else {
-                            etCoupenCode.setError("Enter Coupen Code");
+                            etCoupenCode.setError("Enter Coupon Code");
                         }
                     }
                 });
@@ -131,7 +128,6 @@ public class FragCart extends Fragment {
                     Toast.makeText(getActivity(), "Something wen't wrong", Toast.LENGTH_SHORT).show();
                 } else {
                     if (reader.length() > 0) {
-//                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragDrower, new FragSetDeliveryAddress(), "SOMETAG").addToBackStack("Indo").commit();
 
                         Bundle bundle = new Bundle();
                         bundle.putString("Amount", tvOrderTotla.getText().toString());
@@ -173,7 +169,6 @@ public class FragCart extends Fragment {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.i("response", response);
                         orderTotal = 0;
 
                         if (response.length() > 0) {
@@ -206,19 +201,19 @@ public class FragCart extends Fragment {
                                             String sku = address.getString("sku");
                                             int qty = address.getInt("qty");
                                             String name = address.getString("name");
-                                            String price = address.getString("price");
+                                            int price = address.getInt("price");
                                             String quote_id = address.getString("quote_id");
                                             String product_image = address.getString("product_image");
 
-                                            String subTotal = String.valueOf(Float.parseFloat(price) * qty);
-                                            orderTotal = orderTotal + Float.parseFloat(subTotal);
+                                            String subTotal = String.valueOf(price * qty);
+                                            orderTotal = orderTotal + Integer.parseInt(subTotal);
 
                                             ProdPojo user = new ProdPojo();
                                             user.setIda(item_id);
                                             user.setSku(sku);
                                             user.setQty(String.valueOf(qty));
                                             user.setName(name);
-                                            user.setPrice(price);
+                                            user.setPrice(String.valueOf(price));
                                             user.setQuoteID(quote_id);
                                             user.setSubTotal(subTotal);
                                             user.setImageValue(product_image);
@@ -243,11 +238,13 @@ public class FragCart extends Fragment {
                                     llEmptyCartList.setVisibility(View.VISIBLE);
                                     llFilledCart.setVisibility(View.GONE);
                                     tvCartProceed.setVisibility(View.GONE);
-//                                    Toast.makeText(getActivity(), "You not have any item in cart", Toast.LENGTH_SHORT).show();
                                 }
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                                llEmptyCartList.setVisibility(View.VISIBLE);
+                                llFilledCart.setVisibility(View.GONE);
+                                tvCartProceed.setVisibility(View.GONE);
                             }
                         }
 
@@ -266,7 +263,6 @@ public class FragCart extends Fragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("token", token);
-//                params.put("token", "gqt18hvy6b1xg2sej4iicfl4hdqa33di");
                 return params;
             }
         };
@@ -333,7 +329,7 @@ public class FragCart extends Fragment {
                 final UserViewHolder userViewHolder = (UserViewHolder) holder;
                 userViewHolder.tvCartItemQty.setText("  QTY " + user.getQty() + "  ");
                 userViewHolder.tvCartProdName.setText(user.getName());
-                userViewHolder.tvCartItemPrice.setText("₹: " + user.getPrice());
+                userViewHolder.tvCartItemPrice.setText("₹ " + user.getPrice());
                 userViewHolder.tvCartItemSubTotal.setText(user.getSubTotal());
 
                 Picasso.get().load(commonVariables.imagePath + user.getImageValue()).into(userViewHolder.ivCardItemImage);
@@ -341,7 +337,7 @@ public class FragCart extends Fragment {
                 userViewHolder.tvCartProdName.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getActivity(), user.getQuoteID(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), user.getQuoteID(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -451,16 +447,11 @@ public class FragCart extends Fragment {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.i("response", response);
                         try {
                             if (response.length() > 0) {
 
                                 myDialog.dismiss();
                                 getCartList();
-                                /*Fragment someFragment = new FragCart();
-                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                transaction.replace(R.id.fragDrower, someFragment); // give your fragment container id in first parameter
-                                transaction.commit();*/
 
                             } else {
                                 Toast.makeText(getActivity(), "Invalid Coupon", Toast.LENGTH_SHORT).show();
@@ -484,7 +475,6 @@ public class FragCart extends Fragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-//                params.put("token", "gqt18hvy6b1xg2sej4iicfl4hdqa33di");
                 params.put("token", token);
                 params.put("item_id", itemID);
                 params.put("quantity", qty);
@@ -512,31 +502,26 @@ public class FragCart extends Fragment {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.i("response", response);
+                        JSONObject reader = null;
                         try {
-                            if (response.length() > 0) {
+                            reader = new JSONObject(response);
+                            myDialog.dismiss();
+                            String status = reader.getString("status");
+                            String message = reader.getString("message");
+                            if (status.equals("200")) {
+                                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                                getCartList();
 
-                                if (response.equals("true1")) {
-
-                                    Toast.makeText(getActivity(), "Product remove successfully", Toast.LENGTH_SHORT).show();
-                                    /*Fragment someFragment = new FragCart();
-                                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                    transaction.replace(R.id.fragDrower, someFragment); // give your fragment container id in first parameter
-                                    transaction.commit();*/
-                                    myDialog.dismiss();
-                                    getCartList();
-                                } else {
-                                    Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
-                                }
+                            } else if (status.equals("500")) {
+                                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
 
                             } else {
-                                Toast.makeText(getActivity(), "Invalid Coupon", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
                             }
 
-                        } catch (Exception e) {
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        myDialog.dismiss();
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -549,7 +534,6 @@ public class FragCart extends Fragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-//                params.put("token", "gqt18hvy6b1xg2sej4iicfl4hdqa33di");
                 params.put("token", token);
                 params.put("item_id", itemID);
                 return params;
@@ -568,14 +552,13 @@ public class FragCart extends Fragment {
     }
 
     public void getGetCoupen(final String coupon) {
-        myDialog = commonVariables.showProgressDialog(getActivity(), "Checking Coupen ...");
+        myDialog = commonVariables.showProgressDialog(getActivity(), "Checking Coupon ...");
 
         stringRequest = new StringRequest(Request.Method.POST, "https://shop.indospark.com/android_api/apply_coupons.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.i("response", response);
                         try {
                             if (response.length() > 0) {
 
@@ -585,10 +568,10 @@ public class FragCart extends Fragment {
                                 Log.i("Coupon", message);
 
                                 String amt = tvOrderTotla.getText().toString();
-                                int finalAmt = Integer.parseInt(amt);
+                                float finalAmt = Float.parseFloat(amt);
                                 tvOrderTotla.setText(String.valueOf(finalAmt));
                                 tvCoupenCode.setText("0");
-                                tvCouponCodeTitle.setText("Coupen Code (Applied :");
+                                tvCouponCodeTitle.setText("Coupon Code (Applied) :");
 
                             } else {
                                 Toast.makeText(getActivity(), "Invalid Coupon", Toast.LENGTH_SHORT).show();

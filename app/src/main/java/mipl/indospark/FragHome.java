@@ -20,6 +20,7 @@ import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,8 @@ public class FragHome extends Fragment {
     RelativeLayout rlSearch;
     UserAdapter mUserAdapter;
     RecyclerView mRecyclerView;
+    TextView txt_empty;
+    ProgressBar simpleProgressBar;
     LinearLayout llNoInternet;
     private List<ProdPojo> mUsers = new ArrayList<>();
     Dialog toolbarSearchDialog;
@@ -91,14 +94,12 @@ public class FragHome extends Fragment {
         myDialog = commonVariables.showProgressDialog(getActivity(), "Loading ...");
 
         stringRequest = new StringRequest(Request.Method.GET, "https://shop.indospark.com/android_api/get_homepage_products.php",
-//        stringRequest = new StringRequest(Request.Method.GET, "http://shop.indospark.com/android_api/test_homeproducts.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // process your response here
                         String id, name, sku, price, prodName, img = null;
 
-                        Log.i("Desc JSON", response);
                         RecyclerViewDataAdapter adapter = null;
 
                         if (response.length() > 0) {
@@ -120,7 +121,7 @@ public class FragHome extends Fragment {
 
 //                                    String total_count = subProducts.getString("total_count");
 //                                    if (!total_count.equals("0")) {
-                                    dm.setName(name);             // Category item name
+                                    dm.setName(name);
                                     dm.setIda(id);
 //                                        dm.setCount(total_count);
 
@@ -146,7 +147,6 @@ public class FragHome extends Fragment {
 
                                                 if (attribObj.getString("attribute_code").equals("image")) {
                                                     img = attribObj.getString("value");
-                                                    Log.i("img", img);
                                                 }
                                             }
                                             singleItem.add(new ProdPojo(prodName, sku, price, commonVariables.imagePath + img));
@@ -191,7 +191,6 @@ public class FragHome extends Fragment {
         super.onResume();
     }
 
-
     public void loadToolBarSearch() {
 
         View view = getActivity().getLayoutInflater().inflate(R.layout.view_toolbar_search, null);
@@ -199,6 +198,8 @@ public class FragHome extends Fragment {
         final EditText edtToolSearch = (EditText) view.findViewById(R.id.edt_tool_search);
         ImageView imgToolMic = (ImageView) view.findViewById(R.id.img_tool_mic);
 
+        txt_empty = (TextView) view.findViewById(R.id.txt_empty);
+        simpleProgressBar = (ProgressBar) view.findViewById(R.id.simpleProgressBar);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view_Search);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -261,6 +262,8 @@ public class FragHome extends Fragment {
 
     public void searchProduct(String name) {
 
+        simpleProgressBar.setVisibility(View.VISIBLE);
+
         stringRequest = new StringRequest(Request.Method.GET, "https://shop.indospark.com/index.php/rest/V1/products/?" +
                 "searchCriteria[filter_groups][0][filters][0][field]=name&searchCriteria[filter_groups][0][filters][0]" +
                 "[value]=%" + name + "%&searchCriteria[filter_groups][0][filters][0][condition_type]=like",
@@ -277,45 +280,53 @@ public class FragHome extends Fragment {
                                 JSONObject reader = new JSONObject(response);
                                 JSONArray items = reader.getJSONArray("items");
 
-                                for (int j = 0; j < items.length(); j++) {
-                                    JSONObject curr = items.getJSONObject(j);
+                                if(items.length() > 0) {
+                                    mRecyclerView.setVisibility(View.VISIBLE);
+                                    txt_empty.setVisibility(View.GONE);
 
-                                    String ida = curr.getString("id");
-                                    String sku = curr.getString("sku");
-                                    String name = curr.getString("name");
-                                    String price = curr.getString("price");
+                                    for (int j = 0; j < items.length(); j++) {
+                                        JSONObject curr = items.getJSONObject(j);
 
-                                    JSONArray custom_attributes = curr.getJSONArray("custom_attributes");
+                                        String ida = curr.getString("id");
+                                        String sku = curr.getString("sku");
+                                        String name = curr.getString("name");
+                                        String price = curr.getString("price");
 
-                                    for (int i = 0; i < custom_attributes.length(); i++) {
-                                        JSONObject attribObj = custom_attributes.getJSONObject(i);
+                                        JSONArray custom_attributes = curr.getJSONArray("custom_attributes");
 
-                                        if (attribObj.getString("attribute_code").equals("image")) {
-                                            imageValue = attribObj.getString("value");
+                                        for (int i = 0; i < custom_attributes.length(); i++) {
+                                            JSONObject attribObj = custom_attributes.getJSONObject(i);
+
+                                            if (attribObj.getString("attribute_code").equals("image")) {
+                                                imageValue = attribObj.getString("value");
+                                            }
+                                            if (attribObj.getString("attribute_code").equals("short_description")) {
+                                                short_desc = attribObj.getString("value");
+                                            }
+                                            if (attribObj.getString("attribute_code").equals("special_price")) {
+                                                price = attribObj.getString("value");
+                                            }
                                         }
 
-                                        if (attribObj.getString("attribute_code").equals("short_description")) {
-                                            short_desc = attribObj.getString("value");
-                                        }
-                                        if (attribObj.getString("attribute_code").equals("special_price")) {
-                                            price = attribObj.getString("value");
-                                        }
+                                        ProdPojo user = new ProdPojo();
+                                        user.setName(name);
+                                        user.setIda(ida);
+                                        user.setSku(sku);
+                                        user.setPrice(price);
+                                        user.setShort_desc(short_desc);
+                                        user.setImageValue(commonVariables.imagePath + "" + imageValue);
+
+                                        mUsers.add(user);
                                     }
 
-                                    ProdPojo user = new ProdPojo();
-                                    user.setName(name);
-                                    user.setIda(ida);
-                                    user.setSku(sku);
-                                    user.setPrice(price);
-                                    user.setShort_desc(short_desc);
-                                    user.setImageValue(commonVariables.imagePath + "" + imageValue);
-
-                                    mUsers.add(user);
+                                    mUserAdapter = new UserAdapter();
+                                    mRecyclerView.setAdapter(mUserAdapter);
+                                } else {
+                                    mRecyclerView.setVisibility(View.GONE);
+                                    txt_empty.setVisibility(View.VISIBLE);
                                 }
-
-                                mUserAdapter = new UserAdapter();
-                                mRecyclerView.setAdapter(mUserAdapter);
                             }
+                            simpleProgressBar.setVisibility(View.INVISIBLE);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -388,7 +399,7 @@ public class FragHome extends Fragment {
                 final ProdPojo user = mUsers.get(position);
                 UserViewHolder userViewHolder = (UserViewHolder) holder;
                 userViewHolder.tvCardName.setText(user.getName());
-                userViewHolder.tvCardPrice.setText("₹: " + user.getPrice());
+                userViewHolder.tvCardPrice.setText("₹ " + user.getPrice());
 
                 final String mimeType = "text/html";
                 final String encoding = "UTF-8";

@@ -148,8 +148,6 @@ public class FragMyAccount extends Fragment {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.i("Response", response);
-
                         try {
                             if (response.contains("message")) {
                                 JSONObject jsonObject = new JSONObject(response);
@@ -224,7 +222,6 @@ public class FragMyAccount extends Fragment {
             etPhone.requestFocus();
             status = false;
         }
-
         if (rgGender.getCheckedRadioButtonId() == -1) {
             Toast.makeText(getActivity(), "Please select Gender", Toast.LENGTH_SHORT).show();
             status = false;

@@ -1,9 +1,6 @@
 package mipl.indospark;
 
 import android.app.AlertDialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,10 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -137,7 +131,6 @@ public class Drower extends AppCompatActivity {
                 }
                 ft.add(R.id.fragDrower, new FragCart(),FragCart.class.getCanonicalName())
                         .addToBackStack(FragCart.class.getCanonicalName()).commit();
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragDrower, new FragCart(), "SOMETAG").addToBackStack("Indo").commit();
             }
         });
 
@@ -165,7 +158,7 @@ public class Drower extends AppCompatActivity {
         listDataHeader.add(item4);
 
         ExpandedMenuModel item11 = new ExpandedMenuModel();
-        item11.setIconName("Terms and Condition");
+        item11.setIconName("Terms and Conditions");
         listDataHeader.add(item11);
 
         ExpandedMenuModel item12 = new ExpandedMenuModel();
@@ -194,9 +187,13 @@ public class Drower extends AppCompatActivity {
             item9.setIconName("My Orders");
             listDataHeader.add(item9);
 
-            ExpandedMenuModel item10 = new ExpandedMenuModel();
+            /*ExpandedMenuModel item10 = new ExpandedMenuModel();
             item10.setIconName("My Wish List");
-            listDataHeader.add(item10);
+            listDataHeader.add(item10);*/
+
+            ExpandedMenuModel item15 = new ExpandedMenuModel();
+            item15.setIconName("Live Chat");
+            listDataHeader.add(item15);
 
             ExpandedMenuModel item13 = new ExpandedMenuModel();
             item13.setIconName("Logout");
@@ -313,14 +310,7 @@ public class Drower extends AppCompatActivity {
 
                 Toast.makeText(Drower.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        }) /*{
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("visitor", jsonStr);
-                return params;
-            }
-        }*/;
+        });
 
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
                 10000,
@@ -333,7 +323,6 @@ public class Drower extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
 
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();

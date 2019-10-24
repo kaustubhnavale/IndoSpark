@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="#ba0001"
+    android:background="@color/actionbar"
     android:gravity="center"
     android:weightSum="10">
 
@@ -27,26 +27,27 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:layout_gravity="center">
+        android:gravity="center">
 
         <!-- Menu Item Image -->
         <ImageView
             android:layout_marginRight="10dp"
             android:id="@+id/cartImage"
-            android:layout_width="30dp"
-            android:layout_height="fill_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:clickable="true"
             android:src="@drawable/cart" />
 
         <!-- Badge Count -->
-        <!--<TextView
+        <TextView
             android:background="@drawable/borderlayout"
             android:id="@+id/actionbar_notifcation_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="99"
-            android:textColor="@color/textcolor" />-->
+            android:textSize="12dp"
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 </LinearLayout>

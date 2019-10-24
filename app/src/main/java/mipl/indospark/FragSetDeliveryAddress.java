@@ -125,11 +125,9 @@ public class FragSetDeliveryAddress extends Fragment {
                 wlp.gravity = Gravity.BOTTOM;
                 wlp.width = WindowManager.LayoutParams.FILL_PARENT;
 
-                LinearLayoutManager linearLayoutManager
-                        = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
                 mRecyclerView = (RecyclerView) dialog.findViewById(R.id.rvAddListSet);
                 mRecyclerView.setNestedScrollingEnabled(false);
-//                mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 mRecyclerView.setLayoutManager(linearLayoutManager);
 
                 if (mUsers.size() > 0) {
@@ -144,13 +142,6 @@ public class FragSetDeliveryAddress extends Fragment {
                     public void onClick(View v) {
 
                         dialog.dismiss();
-                        /*android.support.v4.app.FragmentManager fm = ((FragmentActivity)getActivity()).getSupportFragmentManager();
-                        android.support.v4.app.FragmentTransaction ft=fm.beginTransaction();
-                        if (fm.findFragmentById(R.id.fragDrower) != null) {
-                            ft.hide(fm.findFragmentById(R.id.fragDrower));
-                        }
-                        ft.add(R.id.fragDrower, new FragAddAddress(), FragAddAddress.class.getCanonicalName())
-                                .addToBackStack(FragAddAddress.class.getCanonicalName()).commit();*/
 
                         Bundle bundle = new Bundle();
                         bundle.putString("AddID", "New");
@@ -168,7 +159,6 @@ public class FragSetDeliveryAddress extends Fragment {
                                 .addToBackStack(FragAddAddress.class.getCanonicalName()).commit();
                     }
                 });
-
                 dialog.show();
             }
         });
@@ -204,7 +194,6 @@ public class FragSetDeliveryAddress extends Fragment {
                         customer_id = pojo.getCustomerID();
                     }
                 }
-
                 setAddress();
             }
         });
@@ -239,7 +228,6 @@ public class FragSetDeliveryAddress extends Fragment {
                         customer_id = pojo.getCustomerID();
                     }
                 }
-
                 setAddress();
             }
         });
@@ -268,8 +256,6 @@ public class FragSetDeliveryAddress extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-                        Log.i("response", response);
 
                         try {
                             String default_billing = null, default_shipping = null;
@@ -374,7 +360,6 @@ public class FragSetDeliveryAddress extends Fragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-//                params.put("token", "gqt18hvy6b1xg2sej4iicfl4hdqa33di");
                 params.put("token", token);
                 return params;
             }
@@ -491,8 +476,6 @@ public class FragSetDeliveryAddress extends Fragment {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.i("response", response);
-
                         if (response.contains("grand_total")) {
                             myDialog.dismiss();
 
@@ -511,7 +494,6 @@ public class FragSetDeliveryAddress extends Fragment {
                                     .addToBackStack(FragSetDeliveryAddress.class.getCanonicalName())
                                     .commit();
 
-
                         } else {
                             Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
                         }
@@ -526,7 +508,6 @@ public class FragSetDeliveryAddress extends Fragment {
                 myDialog.dismiss();
             }
         }) {
-
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();

@@ -48,7 +48,6 @@ public class FragDefaultAddress extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View v = inflater.inflate(R.layout.fragment_frag_default_address, container, false);
 
@@ -89,8 +88,6 @@ public class FragDefaultAddress extends Fragment {
                 }
                 ft.add(R.id.fragDrower, new FragAddAddress(), FragAddAddress.class.getCanonicalName())
                         .addToBackStack(FragAddAddress.class.getCanonicalName()).commit();
-
-//                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragDrower, new FragAddAddress(), "SOMETAG").addToBackStack("Indo").commit();
             }
         });
 
@@ -105,8 +102,6 @@ public class FragDefaultAddress extends Fragment {
                 }
                 ft.add(R.id.fragDrower, new FragAddAddress(), FragAddAddress.class.getCanonicalName())
                         .addToBackStack(FragAddAddress.class.getCanonicalName()).commit();
-
-//                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragDrower, new FragAddAddress(), "SOMETAG").addToBackStack("Indo").commit();
             }
         });
 
@@ -127,8 +122,6 @@ public class FragDefaultAddress extends Fragment {
                 }
                 ft.add(R.id.fragDrower, fragobj,FragAddList.class.getCanonicalName())
                         .addToBackStack(FragAddList.class.getCanonicalName()).commit();
-
-//                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragDrower, fragobj, "SOMETAG").addToBackStack("Indo").commit();
             }
         });
 
@@ -149,8 +142,6 @@ public class FragDefaultAddress extends Fragment {
                 }
                 ft.add(R.id.fragDrower, fragobj,FragAddList.class.getCanonicalName())
                         .addToBackStack(FragAddList.class.getCanonicalName()).commit();
-
-//                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragDrower, fragobj, "SOMETAG").addToBackStack("Indo").commit();
             }
         });
 
@@ -164,8 +155,6 @@ public class FragDefaultAddress extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-                        Log.i("response", response);
 
                         if (response.length() > 0) {
                             try {
@@ -226,8 +215,8 @@ public class FragDefaultAddress extends Fragment {
 
                                             tvDefBillName.setText(firstname + " " + lastname);
                                             tvDefBillCompany.setText(company);
-                                            tvDefBillAddress.setText(streetName+ ", " + city + " " + postcode);
-                                            tvDefBillTele.setText("T: " +telephone);
+                                            tvDefBillAddress.setText(streetName + ", " + city + " " + postcode);
+                                            tvDefBillTele.setText("T: " + telephone);
                                         }
 
                                         if (default_shipping.equals("true")){
@@ -258,7 +247,7 @@ public class FragDefaultAddress extends Fragment {
                                             tvDefShipName.setText(firstname + " " + lastname);
                                             tvDefShipComp.setText(company);
                                             tvDefShipAddress.setText(streetName + ", " + city + ", " + postcode);
-                                            tvDefShipTele.setText("T: " +telephone);
+                                            tvDefShipTele.setText("T: " + telephone);
                                         }
                                     }
                                 } else {
@@ -288,15 +277,9 @@ public class FragDefaultAddress extends Fragment {
             }
         }) {
 
-            /*@Override
-            public String getBodyContentType() {
-                return "application/x-www-form-urlencoded";
-            }*/
-
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-//                params.put("token", "gqt18hvy6b1xg2sej4iicfl4hdqa33di");
                 params.put("token", token);
                 return params;
             }

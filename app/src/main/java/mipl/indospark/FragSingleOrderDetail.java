@@ -53,12 +53,10 @@ public class FragSingleOrderDetail extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_frag_single_order_detail, container, false);
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            // handle your code here.
             orderID = getArguments().getString("orderID");
         }
 
@@ -114,15 +112,11 @@ public class FragSingleOrderDetail extends Fragment {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.i("Responce", response);
-
                         if (response.length() > 0) {
                             if (response.contains("No Previous  records")) {
 
                             } else {
-
                                 try {
-
                                     /*for (int i = 0; i < myOrder.length(); i++) {*/
                                     JSONObject curr = new JSONObject(response);
 
@@ -154,28 +148,36 @@ public class FragSingleOrderDetail extends Fragment {
                                         JSONObject shipping1 = shipping.getJSONObject("shipping");
                                         JSONObject address = shipping1.getJSONObject("address");
 
-                                        String firstname = address.getString("firstname");
-                                        String lastname = address.getString("lastname");
-                                        String city = address.getString("city");
-                                        String company = address.getString("company");
-                                        String email = address.getString("email");
-                                        String postcode = address.getString("postcode");
-                                        String region = address.getString("region");
-                                        String telephone = address.getString("telephone");
+                                        try {
+                                            String firstname = address.getString("firstname");
+                                            String lastname = address.getString("lastname");
+                                            tvSName.setText(firstname + " " + lastname);
 
-                                        JSONArray street = address.getJSONArray("street");
-                                        String streetName = "";
+                                            String company = address.getString("company");
+                                            tvSCompany.setText(company);
 
-                                        for (int k = 0; k < street.length(); k++) {
-                                            streetName = streetName + " " + street.getString(k);
+                                            String email = address.getString("email");
+
+                                            String city = address.getString("city");
+                                            String postcode = address.getString("postcode");
+                                            tvSCity.setText(city + ", " + postcode);
+
+                                            String region = address.getString("region");
+                                            tvSRegion.setText(region);
+
+                                            String telephone = address.getString("telephone");
+                                            tvSContact.setText(telephone);
+
+                                            JSONArray street = address.getJSONArray("street");
+                                            String streetName = "";
+
+                                            for (int k = 0; k < street.length(); k++) {
+                                                streetName = streetName + " " + street.getString(k);
+                                            }
+                                            tvSStreet.setText(streetName);
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
                                         }
-
-                                        tvSName.setText(firstname + " " + lastname);
-                                        tvSCompany.setText(company);
-                                        tvSStreet.setText(streetName);
-                                        tvSCity.setText(city + ", " + postcode);
-                                        tvSRegion.setText(region);
-                                        tvSContact.setText(telephone);
 
                                         JSONArray items = shipping.getJSONArray("items");
 
@@ -186,7 +188,7 @@ public class FragSingleOrderDetail extends Fragment {
                                             JSONObject item = items.getJSONObject(a);
 
                                             String name = item.getString("name");
-                                            String sku = item.getString("sku");
+                                            String sku = item.getString("sku").trim();
                                             String price = item.getString("price");
                                             String qty_ordered = item.getString("qty_ordered");
 
@@ -204,28 +206,36 @@ public class FragSingleOrderDetail extends Fragment {
                                         }
                                     }
 
-                                    JSONObject billing_address = curr.getJSONObject("billing_address");
-                                    String city = billing_address.getString("city");
-                                    String company = billing_address.getString("company");
-                                    String firstname = billing_address.getString("firstname");
-                                    String lastname = billing_address.getString("lastname");
-                                    String region = billing_address.getString("region");
-                                    String telephone = billing_address.getString("telephone");
-                                    String postcode = billing_address.getString("postcode");
+                                    try {
+                                        JSONObject billing_address = curr.getJSONObject("billing_address");
 
-                                    JSONArray street = billing_address.getJSONArray("street");
-                                    String streetName = "";
+                                        String company = billing_address.getString("company");
+                                        tvBCompany.setText(company);
 
-                                    for (int k = 0; k < street.length(); k++) {
-                                        streetName = streetName + " " + street.getString(k);
+                                        String firstname = billing_address.getString("firstname");
+                                        String lastname = billing_address.getString("lastname");
+                                        tvBName.setText(firstname + " " + lastname);
+
+                                        String telephone = billing_address.getString("telephone");
+                                        tvBContact.setText(telephone);
+
+                                        String city = billing_address.getString("city");
+                                        String postcode = billing_address.getString("postcode");
+                                        tvBCity.setText(city + ", " + postcode);
+
+                                        JSONArray street = billing_address.getJSONArray("street");
+                                        String streetName = "";
+
+                                        for (int k = 0; k < street.length(); k++) {
+                                            streetName = streetName + " " + street.getString(k);
+                                        }
+                                        tvBStreet.setText(streetName);
+
+                                        String region = billing_address.getString("region");
+                                        tvBRegion.setText(region);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
                                     }
-
-                                    tvBName.setText(firstname + " " + lastname);
-                                    tvBCompany.setText(company);
-                                    tvBStreet.setText(streetName);
-                                    tvBCity.setText(city + ", " + postcode);
-                                    tvBRegion.setText(region);
-                                    tvBContact.setText(telephone);
 
                                     /*JSONArray items = curr.getJSONArray("items");
                                     for (int j = 0; j < items.length(); j++) {
@@ -251,7 +261,6 @@ public class FragSingleOrderDetail extends Fragment {
                                     JSONObject payment = curr.getJSONObject("payment");
                                     String paymentMethod = payment.getString("method");
                                     tvPaymentMethod.setText(paymentMethod);
-
 //                                    }
 
                                 } catch (Exception e) {
@@ -272,7 +281,6 @@ public class FragSingleOrderDetail extends Fragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-//                params.put("email_id",  "aniket.tambe@mipl.co.in");
                 params.put("order id", orderID);
                 return params;
             }

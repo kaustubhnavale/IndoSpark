@@ -99,7 +99,7 @@
                     android:background="@drawable/borderlayout"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="Set Other Deliver Address"
+                    android:text="Set Other Delivery Address"
                     android:textColor="@color/themecolor"
                     android:textSize="16dp" />
 

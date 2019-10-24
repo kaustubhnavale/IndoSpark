@@ -6,6 +6,7 @@
     tools:context=".FragHome">
 
     <LinearLayout
+        android:padding="5dp"
         android:background="@color/backGrey"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,7 +39,7 @@
                 android:padding="5dp"
                 android:id="@+id/btnMore"
                 android:layout_width="35dp"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"

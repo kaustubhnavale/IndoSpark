@@ -1,15 +1,11 @@
 package mipl.indospark;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,20 +14,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -39,7 +26,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,9 +55,8 @@ public class FragAddList extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View v = inflater.inflate(R.layout.fragment_frag_add_list, container, false);
 
         sharedpreferences = getActivity().getSharedPreferences(commonVariables.mypreference, Context.MODE_PRIVATE);
@@ -79,7 +64,6 @@ public class FragAddList extends Fragment {
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            // handle your code here.
             addType = getArguments().getString("AddType");
         }
 
@@ -118,11 +102,8 @@ public class FragAddList extends Fragment {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.i("response", response);
-
                         if (response.length() > 0) {
                             try {
-
                                 String imageValue = null;
                                 String short_desc = null;
                                 String default_billing = null, default_shipping = null;
@@ -214,15 +195,9 @@ public class FragAddList extends Fragment {
             }
         }) {
 
-            /*@Override
-            public String getBodyContentType() {
-                return "application/x-www-form-urlencoded";
-            }*/
-
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-//                params.put("token", "gqt18hvy6b1xg2sej4iicfl4hdqa33di");
                 params.put("token", token);
                 return params;
             }
@@ -300,7 +275,7 @@ public class FragAddList extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        new AlertDialog.Builder(getActivity()).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Set Default " + addType + " Address")
+                        new AlertDialog.Builder(getActivity()).setTitle("Set Default " + addType + " Address")
                                 .setMessage("Are you sure?")
                                 .setPositiveButton("yes", new DialogInterface.OnClickListener() {
                                     @Override
@@ -331,7 +306,7 @@ public class FragAddList extends Fragment {
                         bundle.putString("Postcode", user.getPostcode());
                         bundle.putString("Region", user.getRegion());
                         bundle.putString("Email", user.getEmail());
-                        //set Fragmentclass Arguments
+
                         FragAddAddress fragobj = new FragAddAddress();
                         fragobj.setArguments(bundle);
 
@@ -361,8 +336,6 @@ public class FragAddList extends Fragment {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.i("response", response);
-
                         JSONObject reader = null;
                         try {
                             reader = new JSONObject(response);
@@ -380,7 +353,6 @@ public class FragAddList extends Fragment {
                         }
 
                         myDialog1.dismiss();
-
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -390,12 +362,6 @@ public class FragAddList extends Fragment {
                 myDialog1.dismiss();
             }
         }) {
-
-            /*@Override
-            public String getBodyContentType() {
-                return "application/x-www-form-urlencoded";
-            }*/
-
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();

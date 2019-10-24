@@ -1,14 +1,9 @@
 package mipl.indospark;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -98,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
         if (CheckNetwork.isInternetAvailable(this)) {
             getDefaultPINCODE();
             getProdDesc(sku);
-//            getProdDesc("CM350VESF");
         } else {
             Toast.makeText(this, "Internet Connection not available", Toast.LENGTH_SHORT).show();
         }
@@ -156,16 +150,16 @@ public class MainActivity extends AppCompatActivity {
                                 value = entry.getValue();
 
                                 if (key.equals(itemValue)) {
-                                    prodPrise.setText("₹: " + value);
+                                    prodPrise.setText("₹ " + value);
                                     break;
                                 } else {
                                     int totalPrice = Integer.parseInt(price) * Integer.parseInt(itemValue);
-                                    prodPrise.setText("₹: " + totalPrice);
+                                    prodPrise.setText("₹ " + totalPrice);
                                 }
                             }
                         } else {
                             int totalPrice = Integer.parseInt(price) * Integer.parseInt(itemValue);
-                            prodPrise.setText("₹: " + totalPrice);
+                            prodPrise.setText("₹ " + totalPrice);
                         }
                     }
                 });
@@ -197,9 +191,6 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // process your response here
-
-                        Log.i("Desc JSON", response);
 
                         if (response.length() > 0) {
                             try {
@@ -213,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                                 String attribute_set_id = reader.getString("attribute_set_id");
 
                                 price = reader.getString("price");
-                                prodPrise.setText("₹: " + price);
+                                prodPrise.setText("₹ " + price);
 
                                 String status = reader.getString("status");
                                 String visibility = reader.getString("visibility");
@@ -264,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     if (curr.getString("attribute_code").equals("special_price")) {
                                         String spe_price = curr.getString("value");
-                                        prodPrise.setText("₹: " + spe_price);
+                                        prodPrise.setText("₹ " + spe_price);
                                     }
                                 }
 
@@ -296,14 +287,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
-        }) /*{
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("visitor", jsonStr);
-                return params;
-            }
-        }*/;
+        });
 
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(
                 10000,
@@ -384,15 +368,12 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
-
     public void getDefaultPINCODE() {
 
         stringRequest = new StringRequest(Request.Method.POST, "https://shop.indospark.com/android_api/get_all_address.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-                        Log.i("response", response);
 
                         if (response.length() > 0) {
                             try {
@@ -437,11 +418,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }) {
 
-            /*@Override
-            public String getBodyContentType() {
-                return "application/x-www-form-urlencoded";
-            }*/
-
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
@@ -465,8 +441,6 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-                        Log.i("response", response);
 
                         JSONObject reader = null;
                         try {
@@ -495,12 +469,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }) {
-
-            /*@Override
-            public String getBodyContentType() {
-                return "application/x-www-form-urlencoded";
-            }*/
-
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
@@ -527,12 +495,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.i("response", response);
                         try {
                             if (response.length() > 0) {
 
                                 myDialog.dismiss();
-
 
                             } else {
                                 Toast.makeText(MainActivity.this, "Invalid Coupon", Toast.LENGTH_SHORT).show();

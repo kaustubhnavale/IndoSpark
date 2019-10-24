@@ -1,11 +1,9 @@
 package mipl.indospark;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -57,9 +55,6 @@ public class AllProducts extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        /*RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
-        mRecyclerView.setLayoutManager(mLayoutManager);*/
-
         catID = getIntent().getStringExtra("catID");
 
         if (CheckNetwork.isInternetAvailable(this)) {
@@ -73,7 +68,6 @@ public class AllProducts extends AppCompatActivity {
 
         myDialog = commonVariables.showProgressDialog(AllProducts.this, "Getting Products ...");
 
-//        stringRequest = new StringRequest(Request.Method.GET, "http://shop.indospark.com/index.php/rest/V1/products?searchCriteria",
         stringRequest = new StringRequest(Request.Method.POST, "https://shop.indospark.com/android_api/get_categories_products.php",
                 new Response.Listener<String>() {
                     @Override
@@ -209,7 +203,7 @@ public class AllProducts extends AppCompatActivity {
                 UserViewHolder userViewHolder = (UserViewHolder) holder;
                 userViewHolder.tvCardName.setText(user.getName());
 //                userViewHolder.tvCardDesc.setText(user.getShort_desc());
-                userViewHolder.tvCardPrice.setText("₹: " + user.getPrice());
+                userViewHolder.tvCardPrice.setText("₹ " + user.getPrice());
 
                 Picasso.get().load(user.getImageValue()).into(userViewHolder.ivCardImage);
 
@@ -218,18 +212,13 @@ public class AllProducts extends AppCompatActivity {
                     public void onClick(View v) {
 
                         if (!(user.getSku() == null || user.getSku().equals(""))) {
-                            /*Intent i = new Intent(AllProducts.this, MainActivity.class);
-                            i.putExtra("SKU", user.getSku());
-                            startActivity(i);*/
 
                             Bundle bundle = new Bundle();
                             bundle.putString("SKU", user.getSku());
                             //set Fragmentclass Arguments
                             FragProdDesc fragobj = new FragProdDesc();
                             fragobj.setArguments(bundle);
-                            /*getFragmentManager().beginTransaction()
-                                    .replace(R.id.fragDrower, fragobj )
-                                    .commit();*/
+
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragDrower, fragobj, "SOMETAG").addToBackStack("Indo").commit();
 
                         } else {

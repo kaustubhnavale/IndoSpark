@@ -38,7 +38,6 @@ public class Registration extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
         startActivity(new Intent(this, Login.class));
         finish();
     }
@@ -112,7 +111,7 @@ public class Registration extends AppCompatActivity {
                                     if (!msg.equals("")) {
 
                                         new AlertDialog.Builder(Registration.this).setIcon(android.R.drawable.ic_dialog_alert)
-                                                .setMessage("Activation link sent on mail. Activate first")
+                                                .setMessage("Activation link sent on mail. Activate first.")
                                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int which) {
@@ -225,6 +224,5 @@ public class Registration extends AppCompatActivity {
         matcher = pattern.matcher(password);
 
         return matcher.matches();
-
     }
 }

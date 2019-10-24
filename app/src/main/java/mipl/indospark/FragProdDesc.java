@@ -60,6 +60,7 @@ public class FragProdDesc extends Fragment {
     TextView prodTitle, prodPrise, prodQty, tvPostalCode, tvDeliveryStatus;
     TextView tvAddToCart, tvBuy, tvAddReview;
     WebView wvProdDesc, wvProdShortDesc;
+    LinearLayout llDeliverTo;
 
     ImageView imageView, text;
     ProgressDialog dialog, myDialog;
@@ -80,6 +81,7 @@ public class FragProdDesc extends Fragment {
     TextView tvDeliveryStatusdialog;
 
     RecyclerView rvShowReview;
+    TextView tvNoRevoewText;
     private List<ProdPojo> reviewList = new ArrayList<>();
     UserAdapter1 mReviewAdapter;
     PageIndicatorView pageIndicatorView;
@@ -89,9 +91,7 @@ public class FragProdDesc extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_frag_prod_desc, container, false);
 
@@ -111,10 +111,12 @@ public class FragProdDesc extends Fragment {
         tvAddReview = (TextView) v.findViewById(R.id.tvAddReview);
         wvProdDesc = (WebView) v.findViewById(R.id.wvProdDesc);
         wvProdShortDesc = (WebView) v.findViewById(R.id.wvProdShortDesc);
+        llDeliverTo = (LinearLayout) v.findViewById(R.id.llDeliverTo);
 
         mViewPager = (ViewPager) v.findViewById(R.id.pager);
 
         rvShowReview = (RecyclerView) v.findViewById(R.id.rvShowReview);
+        tvNoRevoewText = (TextView) v.findViewById(R.id.tvNoRevoewText);
 
         pageIndicatorView = (PageIndicatorView) v.findViewById(R.id.pageIndicatorView);
 
@@ -128,7 +130,6 @@ public class FragProdDesc extends Fragment {
         h1 = new HashMap<String, String>();
 
         if (CheckNetwork.isInternetAvailable(getActivity())) {
-//            getDefaultPINCODE();
             getProdDesc(sku);
         } else {
             Toast.makeText(getActivity(), "Internet Connection not available", Toast.LENGTH_SHORT).show();
@@ -155,31 +156,35 @@ public class FragProdDesc extends Fragment {
                 btnSubmitDialog.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!etQtyDialog.getText().toString().equals("")) {
+                        String itemValue = etQtyDialog.getText().toString();
 
-                            itemValue = etQtyDialog.getText().toString();
+                        if (!itemValue.equals("")) {
+                            if (!(Integer.parseInt(itemValue) == 0)) {
 
-                            prodQty.setText(" QTY " + itemValue + " ");
-                            String key = null, value = null;
+                                prodQty.setText(" QTY " + itemValue.trim() + " ");
+                                String key = null, value = null;
 
-                            if (h1.size() > 0) {
-                                for (Map.Entry<String, String> entry : h1.entrySet()) {
-                                    key = entry.getKey();
-                                    value = entry.getValue();
+                                if (h1.size() > 0) {
+                                    for (Map.Entry<String, String> entry : h1.entrySet()) {
+                                        key = entry.getKey();
+                                        value = entry.getValue();
 
-                                    if (key.equals(itemValue)) {
-                                        prodPrise.setText("₹: " + value);
-                                        break;
-                                    } else {
-                                        int totalPrice = Integer.parseInt(price) * Integer.parseInt(itemValue);
-                                        prodPrise.setText("₹: " + totalPrice);
+                                        if (key.equals(itemValue)) {
+                                            prodPrise.setText("₹ " + value);
+                                            break;
+                                        } else {
+                                            int totalPrice = Integer.parseInt(price) * Integer.parseInt(itemValue);
+                                            prodPrise.setText("₹ " + totalPrice);
+                                        }
                                     }
+                                } else {
+                                    int totalPrice = Integer.parseInt(price) * Integer.parseInt(itemValue);
+                                    prodPrise.setText("₹ " + totalPrice);
                                 }
+                                dialog.dismiss();
                             } else {
-                                int totalPrice = Integer.parseInt(price) * Integer.parseInt(itemValue);
-                                prodPrise.setText("₹: " + totalPrice);
+                                etQtyDialog.setError("Minimum quantity is 1");
                             }
-                            dialog.dismiss();
 
                         } else {
                             etQtyDialog.setError("Enter Quantity");
@@ -224,16 +229,16 @@ public class FragProdDesc extends Fragment {
                                 value = entry.getValue();
 
                                 if (key.equals(itemValue)) {
-                                    prodPrise.setText("₹: " + value);
+                                    prodPrise.setText("₹ " + value);
                                     break;
                                 } else {
                                     int totalPrice = Integer.parseInt(price) * Integer.parseInt(itemValue);
-                                    prodPrise.setText("₹: " + totalPrice);
+                                    prodPrise.setText("₹ " + totalPrice);
                                 }
                             }
                         } else {
                             int totalPrice = Integer.parseInt(price) * Integer.parseInt(itemValue);
-                            prodPrise.setText("₹: " + totalPrice);
+                            prodPrise.setText("₹ " + totalPrice);
                         }
                     }
                 });*/
@@ -296,7 +301,6 @@ public class FragProdDesc extends Fragment {
 
                 if (!sku1.equals("")) {
                     if (CheckNetwork.isInternetAvailable(getActivity())) {
-
                         addInCart("Cart");
                     } else {
                         Toast.makeText(getActivity(), "Network not available", Toast.LENGTH_SHORT).show();
@@ -354,6 +358,7 @@ public class FragProdDesc extends Fragment {
                         public void onClick(View v) {
                             if (etEnterPinCode.getText().toString().length() == 6) {
                                 getDeliveryStatus(etEnterPinCode.getText().toString());
+                                tvPostalCode.setText("Deliver To - " + etEnterPinCode.getText().toString());
 
                             } else {
                                 etEnterPinCode.setError("Enter valid Pincode");
@@ -452,16 +457,13 @@ public class FragProdDesc extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // process your response here
-
-                        Log.i("Desc JSON", response);
 
                         if (response.length() > 0) {
                             try {
                                 JSONObject reader = new JSONObject(response);
 
                                 id = reader.getString("id");
-                                sku1 = reader.getString("sku");
+                                sku1 = reader.getString("sku").trim();
                                 name = reader.getString("name");
                                 prodstatus = reader.getString("status");
                                 prodTitle.setText(name);
@@ -484,7 +486,7 @@ public class FragProdDesc extends Fragment {
                                 String attribute_set_id = reader.getString("attribute_set_id");
 
                                 price = reader.getString("price");
-                                prodPrise.setText("₹: " + price);
+                                prodPrise.setText("₹ " + price);
 
                                 String status = reader.getString("status");
                                 String visibility = reader.getString("visibility");
@@ -535,7 +537,7 @@ public class FragProdDesc extends Fragment {
 
                                     if (curr.getString("attribute_code").equals("special_price")) {
                                         String spe_price = curr.getString("value");
-                                        prodPrise.setText("₹: " + spe_price);
+                                        prodPrise.setText("₹ " + spe_price);
                                     }
                                 }
 
@@ -655,8 +657,6 @@ public class FragProdDesc extends Fragment {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.i("response", response);
-
                         if (response.length() > 0) {
                             try {
 
@@ -725,10 +725,13 @@ public class FragProdDesc extends Fragment {
 
                                         mUsers.add(user);
                                     }
+                                } else {
+                                    llDeliverTo.setVisibility(View.GONE);
                                 }
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                                llDeliverTo.setVisibility(View.GONE);
                             }
                         }
                     }
@@ -764,8 +767,6 @@ public class FragProdDesc extends Fragment {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.i("response", response);
-
                         JSONObject reader = null;
                         try {
                             reader = new JSONObject(response);
@@ -779,6 +780,16 @@ public class FragProdDesc extends Fragment {
                                 try {
                                     tvDeliveryStatusdialog.setText("We deliver product to this address.");
                                     tvDeliveryStatusdialog.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+
+                                    tvAddToCart.setClickable(true);
+                                    tvBuy.setClickable(true);
+
+                                    tvBuy.setAlpha((float) 1);
+                                    tvAddToCart.setAlpha((float) 1);
+
+                                    tvDeliveryStatus.setText("Instock");
+                                    tvDeliveryStatus.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -804,7 +815,6 @@ public class FragProdDesc extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -838,7 +848,6 @@ public class FragProdDesc extends Fragment {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.i("response", response);
                         try {
                             if (page.equals("Cart")) {
                                 if (response.length() > 0) {
@@ -897,7 +906,6 @@ public class FragProdDesc extends Fragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-//                params.put("token", "gqt18hvy6b1xg2sej4iicfl4hdqa33di");
                 params.put("token", token);
                 params.put("quantity", itemValue);
                 params.put("sku", sku1);
@@ -938,7 +946,7 @@ public class FragProdDesc extends Fragment {
                             }
 
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                                e.printStackTrace();
                         }
 
                         myDialog.dismiss();
@@ -1004,6 +1012,9 @@ public class FragProdDesc extends Fragment {
                                 mReviewAdapter = new UserAdapter1();
                                 rvShowReview.setAdapter(mReviewAdapter);
                                 rvShowReview.setLayoutManager(new LinearLayoutManager(getActivity()));
+                            } else {
+                                tvNoRevoewText.setVisibility(View.VISIBLE);
+                                rvShowReview.setVisibility(View.GONE);
                             }
 
                         } catch (JSONException e) {

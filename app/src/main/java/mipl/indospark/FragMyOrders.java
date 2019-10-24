@@ -8,12 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +22,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -76,13 +72,10 @@ public class FragMyOrders extends Fragment {
 
         myDialog = commonVariables.showProgressDialog(getActivity(), "Getting Orders ...");
 
-//        stringRequest = new StringRequest(Request.Method.GET, "https://shop.indospark.com/index.php/rest/V1/products?searchCriteria",
         stringRequest = new StringRequest(Request.Method.POST, "https://shop.indospark.com/android_api/get_all_orders.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-                        Log.i("Responce", response);
 
                         if (response.length() > 0) {
                             if (response.contains("No Previous  records")) {
@@ -162,7 +155,6 @@ public class FragMyOrders extends Fragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-//                params.put("email_id",  "aniket.tambe@mipl.co.in");
                 params.put("email_id", email);
                 return params;
             }

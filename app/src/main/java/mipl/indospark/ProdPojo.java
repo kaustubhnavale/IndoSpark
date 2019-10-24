@@ -9,6 +9,12 @@ public class ProdPojo {
     String price;
     String Date;
     String title, detail;
+    String imageValue;
+    String qty, QuoteID, subTotal;
+    String count;
+    String short_desc;
+    String Status;
+
 
     public String getTitle() {
         return title;
@@ -34,7 +40,6 @@ public class ProdPojo {
         Status = status;
     }
 
-    String Status;
 
     public String getDate() {
         return Date;
@@ -52,8 +57,6 @@ public class ProdPojo {
         this.subTotal = subTotal;
     }
 
-    String imageValue;
-    String qty, QuoteID, subTotal;
 
     public String getQty() {
         return qty;
@@ -79,9 +82,8 @@ public class ProdPojo {
         this.count = count;
     }
 
-    String count;
-
     private ArrayList<ProdPojo> allItemsInSection;
+
 
     public ProdPojo(String name, String sku, String price, String image) {
         this.name = name;
@@ -102,8 +104,6 @@ public class ProdPojo {
     public void setShort_desc(String short_desc) {
         this.short_desc = short_desc;
     }
-
-    String short_desc;
 
     public String getIda() {
         return ida;

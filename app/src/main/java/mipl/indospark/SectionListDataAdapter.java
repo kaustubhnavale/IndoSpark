@@ -37,7 +37,7 @@ public class SectionListDataAdapter extends RecyclerView.Adapter<SectionListData
         holder.singleItem = itemsList.get(i);
 
         holder.tvTitle.setText(holder.singleItem.getName());
-        holder.tvPrice.setText("₹ : " + holder.singleItem.getPrice());
+        holder.tvPrice.setText("₹ " + holder.singleItem.getPrice());
         Picasso.get().load(holder.singleItem.getImageValue()).into(holder.itemImage);
     }
 

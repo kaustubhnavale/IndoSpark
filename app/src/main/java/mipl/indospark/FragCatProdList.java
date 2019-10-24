@@ -57,9 +57,6 @@ public class FragCatProdList extends Fragment {
         mRecyclerView = (RecyclerView) v.findViewById(R.id.my_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        /*RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
-        mRecyclerView.setLayoutManager(mLayoutManager);*/
-
         Bundle bundle = this.getArguments();
 
         if(bundle != null){
@@ -80,7 +77,6 @@ public class FragCatProdList extends Fragment {
 
         myDialog = commonVariables.showProgressDialog(getActivity(), "Getting Products ...");
 
-//        stringRequest = new StringRequest(Request.Method.GET, "http://shop.indospark.com/index.php/rest/V1/products?searchCriteria",
         stringRequest = new StringRequest(Request.Method.POST, "https://shop.indospark.com/android_api/get_categories_products.php",
                 new Response.Listener<String>() {
                     @Override
@@ -236,9 +232,7 @@ public class FragCatProdList extends Fragment {
                 final ProdPojo user = mUsers.get(position);
                 UserViewHolder userViewHolder = (UserViewHolder) holder;
                 userViewHolder.tvCardName.setText(user.getName());
-                userViewHolder.tvCardPrice.setText("₹: " + user.getPrice());
-
-//                userViewHolder.tvCardDesc.setText(user.getShort_desc());
+                userViewHolder.tvCardPrice.setText("₹ " + user.getPrice());
 
                 final String mimeType = "text/html";
                 final String encoding = "UTF-8";
@@ -255,9 +249,6 @@ public class FragCatProdList extends Fragment {
                     public void onClick(View v) {
 
                         if (!(user.getSku() == null || user.getSku().equals(""))) {
-                            /*Intent i = new Intent(AllProducts.this, MainActivity.class);
-                            i.putExtra("SKU", user.getSku());
-                            startActivity(i);*/
 
                             Bundle bundle = new Bundle();
                             bundle.putString("SKU", user.getSku());
@@ -272,9 +263,6 @@ public class FragCatProdList extends Fragment {
                             }
                             ft.add(R.id.fragDrower, fragobj,FragProdDesc.class.getCanonicalName())
                                     .addToBackStack(FragProdDesc.class.getCanonicalName()).commit();
-
-
-//                            ((FragmentActivity)getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.fragDrower, fragobj, "SOMETAG").addToBackStack("Indo").commit();
 
                         } else {
                             Toast.makeText(getActivity(), "Something wen't wrong", Toast.LENGTH_SHORT).show();

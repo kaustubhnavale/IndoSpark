@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/img_tool_back"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@drawable/ic_arrow_left_grey600_24dp"/>
 
         <EditText
@@ -43,6 +43,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/cancel"/>
+
+        <ProgressBar
+            android:layout_margin="10dp"
+            android:id="@+id/simpleProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_centerHorizontal="true"/>
 
     </LinearLayout>
 
