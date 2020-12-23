@@ -6,10 +6,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +41,7 @@ public class FragDefaultAddress extends Fragment {
     TextView tvDefBillName, tvDefBillCompany, tvDefBillAddress, tvDefBillTele;
     TextView tvAddShipping, tvAddBilling;
     TextView tvViewAllBilling, tvViewAllShipping;
+    ImageView ivDefAddAddress;
 
     SharedPreferences sharedpreferences;
     String token;
@@ -74,6 +75,8 @@ public class FragDefaultAddress extends Fragment {
 
         tvViewAllShipping = (TextView) v.findViewById(R.id.tvViewAllShipping);
         tvViewAllBilling = (TextView) v.findViewById(R.id.tvViewAllBilling);
+
+        ivDefAddAddress = (ImageView) v.findViewById(R.id.ivDefAddAddress);
 
         getAddList();
 
@@ -142,6 +145,19 @@ public class FragDefaultAddress extends Fragment {
                 }
                 ft.add(R.id.fragDrower, fragobj,FragAddList.class.getCanonicalName())
                         .addToBackStack(FragAddList.class.getCanonicalName()).commit();
+            }
+        });
+
+        ivDefAddAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
+                android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
+                if (fm.findFragmentById(R.id.fragDrower) != null) {
+                    ft.hide(fm.findFragmentById(R.id.fragDrower));
+                }
+                ft.add(R.id.fragDrower, new FragAddAddress(), FragAddAddress.class.getCanonicalName())
+                        .addToBackStack(FragAddAddress.class.getCanonicalName()).commit();
             }
         });
 

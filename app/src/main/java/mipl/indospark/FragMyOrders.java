@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,7 +34,8 @@ import java.util.Map;
 
 public class FragMyOrders extends Fragment {
 
-    private RecyclerView mRecyclerView;
+//    private RecyclerView mRecyclerView;
+    private ShimmerRecyclerView mRecyclerView;
     private UserAdapter mUserAdapter;
 
     StringRequest stringRequest;
@@ -56,13 +58,13 @@ public class FragMyOrders extends Fragment {
 
         tvOrderCount = (TextView) v.findViewById(R.id.tvOrderCount);
 
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.rvMyOrderList);
+        mRecyclerView = (ShimmerRecyclerView) v.findViewById(R.id.rvMyOrderList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         if (CheckNetwork.isInternetAvailable(getActivity())) {
             getAllProd();
         } else {
-            Toast.makeText(getActivity(), "Internet Connection not available", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Internet Connection not available.", Toast.LENGTH_SHORT).show();
         }
 
         return v;
@@ -70,7 +72,7 @@ public class FragMyOrders extends Fragment {
 
     public void getAllProd() {
 
-        myDialog = commonVariables.showProgressDialog(getActivity(), "Getting Orders ...");
+//        myDialog = commonVariables.showProgressDialog(getActivity(), "Getting Orders ...");
 
         stringRequest = new StringRequest(Request.Method.POST, "https://shop.indospark.com/android_api/get_all_orders.php",
                 new Response.Listener<String>() {
@@ -78,13 +80,15 @@ public class FragMyOrders extends Fragment {
                     public void onResponse(String response) {
 
                         if (response.length() > 0) {
-                            if (response.contains("No Previous  records")) {
+                            if (response.contains("No Previous records")) {
                                 tvOrderCount.setText("Total Orders: 0");
+                                mRecyclerView.setVisibility(View.GONE);
 
                             } else {
 
                                 try {
 
+                                    mRecyclerView.setVisibility(View.VISIBLE);
                                     String firstname = null, lastname = null;
 
                                     JSONArray myOrder = new JSONArray(response);
@@ -113,19 +117,18 @@ public class FragMyOrders extends Fragment {
                                         JSONObject extension_attributes = curr.getJSONObject("extension_attributes");
                                         JSONArray shipping_assignments = extension_attributes.getJSONArray("shipping_assignments");
 
-                                        for (int j = 0; j < shipping_assignments.length(); j++) {
+                                        /*for (int j = 0; j < shipping_assignments.length(); j++) {
                                             JSONObject shipping = shipping_assignments.getJSONObject(j);
                                             JSONObject shipping1 = shipping.getJSONObject("shipping");
                                             JSONObject address = shipping1.getJSONObject("address");
 
                                             firstname = address.getString("firstname");
                                             lastname = address.getString("lastname");
-
-                                        }
+                                        }*/
 
                                         ProdPojo user = new ProdPojo();
                                         user.setIda(entity_id);
-                                        user.setName(firstname + " " + lastname);
+//                                        user.setName(firstname + " " + lastname);
                                         user.setPrice(base_grand_total);
                                         user.setQuoteID(orderID);
                                         user.setStatus(status);
@@ -133,6 +136,7 @@ public class FragMyOrders extends Fragment {
 
                                         mUsers.add(user);
 
+                                        mRecyclerView.showShimmerAdapter();
                                         mUserAdapter = new UserAdapter();
                                         mRecyclerView.setAdapter(mUserAdapter);
                                     }
@@ -142,14 +146,14 @@ public class FragMyOrders extends Fragment {
                                 }
                             }
                         }
-                        myDialog.dismiss();
+//                        myDialog.dismiss();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
                 Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                myDialog.dismiss();
+//                myDialog.dismiss();
             }
         }) {
             @Override

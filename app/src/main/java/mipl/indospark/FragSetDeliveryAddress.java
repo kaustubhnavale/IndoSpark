@@ -1,15 +1,16 @@
 package mipl.indospark;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,6 @@ public class FragSetDeliveryAddress extends Fragment {
     TextView tvAddAddresss;
 
     public FragSetDeliveryAddress() {
-        // Required empty public constructor
     }
 
     SharedPreferences sharedpreferences;
@@ -181,7 +181,8 @@ public class FragSetDeliveryAddress extends Fragment {
                         shipping_tel = pojo.getTelephone();
                         customer_id = pojo.getCustomerID();
 
-                    } else if (pojo.getDefaultBilling().equals("true")) {
+                    }
+                    if (pojo.getDefaultBilling().equals("true")) {
                         billing_firstname = pojo.getFirstname();
                         billing_lastname = pojo.getLastname();
                         billing_company = pojo.getCompany();
@@ -215,7 +216,8 @@ public class FragSetDeliveryAddress extends Fragment {
                         shipping_tel = pojo.getTelephone();
                         customer_id = pojo.getCustomerID();
 
-                    } else if (pojo.getDefaultBilling().equals("true")) {
+                    }
+                    if (pojo.getDefaultBilling().equals("true")) {
                         billing_firstname = pojo.getFirstname();
                         billing_lastname = pojo.getLastname();
                         billing_company = pojo.getCompany();
@@ -504,7 +506,27 @@ public class FragSetDeliveryAddress extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                new AlertDialog.Builder(getActivity()).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Error")
+                        .setMessage("Set Shipping and Billing address, First")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                android.support.v4.app.FragmentManager fm = ((FragmentActivity)getActivity()).getSupportFragmentManager();
+                                android.support.v4.app.FragmentTransaction ft=fm.beginTransaction();
+                                if (fm.findFragmentById(R.id.fragDrower) != null) {
+                                    ft.hide(fm.findFragmentById(R.id.fragDrower));
+                                }
+                                ft.add(R.id.fragDrower, new FragDefaultAddress(), FragDefaultAddress.class.getCanonicalName())
+                                        .addToBackStack(FragDefaultAddress.class.getCanonicalName()).commit();
+
+                            }
+                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
                 myDialog.dismiss();
             }
         }) {

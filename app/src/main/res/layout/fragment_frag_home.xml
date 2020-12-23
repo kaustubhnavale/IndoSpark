@@ -6,23 +6,21 @@
     tools:context=".FragHome">
 
     <LinearLayout
-        android:padding="5dp"
-        android:background="@color/backGrey"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/backGrey"
         android:orientation="vertical"
+        android:padding="5dp"
         android:weightSum="10">
 
         <RelativeLayout
             android:id="@+id/rlSearch"
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp">
+            android:layout_margin="3dp"
+            android:background="@color/white">
 
             <TextView
-                android:layout_marginLeft="5dp"
-                android:background="@android:color/transparent"
                 android:id="@+id/itemTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -30,20 +28,22 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
                 android:layout_toLeftOf="@+id/btnMore"
+                android:background="@android:color/transparent"
                 android:hint="Search Product ..."
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
             <ImageView
-                android:padding="5dp"
                 android:id="@+id/btnMore"
                 android:layout_width="35dp"
                 android:layout_height="40dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/search"/>
+                android:padding="5dp"
+                android:src="@drawable/search" />
 
         </RelativeLayout>
 
@@ -53,35 +53,52 @@
             android:layout_weight="7.5"
             android:src="@drawable/banerimage" />
 
-        <android.support.v7.widget.RecyclerView
+        <!--<android.support.v7.widget.RecyclerView
             android:id="@+id/my_recycler_view1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2.5"
-            android:scrollbars="none" />
+            android:scrollbars="none" />-->
+
+        <ScrollView
+            android:id="@+id/svProductView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5">
+
+            <com.cooltechworks.views.shimmer.ShimmerRecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/shimmer_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:shimmer_demo_angle="20"
+                app:shimmer_demo_child_count="10"
+                app:shimmer_demo_grid_child_count="1"
+                app:shimmer_demo_layout_manager_type="linear_vertical" />
+
+        </ScrollView>
 
         <LinearLayout
             android:id="@+id/llNoInternet"
-            android:visibility="gone"
-            android:background="@color/white"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2.5"
-            android:orientation="vertical">
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:src="@drawable/no_internet"/>
+                android:src="@drawable/no_internet" />
 
             <TextView
-                android:layout_margin="20dp"
-                android:textSize="20dp"
-                android:textColor="@color/themecolor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="No Internet"/>
+                android:layout_margin="20dp"
+                android:text="No Internet"
+                android:textColor="@color/themecolor"
+                android:textSize="20dp" />
 
         </LinearLayout>
     </LinearLayout>

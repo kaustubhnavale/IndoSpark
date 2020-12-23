@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -12,7 +13,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +57,7 @@ public class FragProdDesc extends Fragment {
     HashMap<String, String> h1;
     private List<AddressPojo> mUsers;
 
-    TextView prodTitle, prodPrise, prodQty, tvPostalCode, tvDeliveryStatus;
+    TextView prodTitle, prodPrise, prodSpePrise, prodQty, tvPostalCode, tvDeliveryStatus;
     TextView tvAddToCart, tvBuy, tvAddReview;
     WebView wvProdDesc, wvProdShortDesc;
     LinearLayout llDeliverTo;
@@ -71,7 +71,7 @@ public class FragProdDesc extends Fragment {
 
     ArrayList<String> v1;
     String itemValue = "1";
-    String price, id, name, prodstatus;
+    String price, spe_price, id, name, prodstatus;
     String sku1, sku;
 
     SharedPreferences sharedpreferences;
@@ -103,6 +103,7 @@ public class FragProdDesc extends Fragment {
 
         prodTitle = (TextView) v.findViewById(R.id.prodTitle);
         prodPrise = (TextView) v.findViewById(R.id.prodPrise);
+        prodSpePrise = (TextView) v.findViewById(R.id.prodSpePrise);
         prodQty = (TextView) v.findViewById(R.id.prodQty);
         tvPostalCode = (TextView) v.findViewById(R.id.tvPostalCode);
         tvDeliveryStatus = (TextView) v.findViewById(R.id.tvDeliveryStatus);
@@ -158,36 +159,43 @@ public class FragProdDesc extends Fragment {
                     public void onClick(View v) {
                         String itemValue = etQtyDialog.getText().toString();
 
-                        if (!itemValue.equals("")) {
-                            if (!(Integer.parseInt(itemValue) == 0)) {
+                        try {
+                            if (!itemValue.equals("")) {
+                                if (!(Integer.parseInt(itemValue) == 0)) {
 
-                                prodQty.setText(" QTY " + itemValue.trim() + " ");
-                                String key = null, value = null;
+                                    prodQty.setText(" QTY " + itemValue.trim() + " ");
+                                    String key = null, value = null;
 
-                                if (h1.size() > 0) {
-                                    for (Map.Entry<String, String> entry : h1.entrySet()) {
-                                        key = entry.getKey();
-                                        value = entry.getValue();
+                                    if (h1.size() > 0) {
+                                        for (Map.Entry<String, String> entry : h1.entrySet()) {
+                                            key = entry.getKey();
+                                            value = entry.getValue();
 
-                                        if (key.equals(itemValue)) {
-                                            prodPrise.setText("₹ " + value);
-                                            break;
-                                        } else {
-                                            int totalPrice = Integer.parseInt(price) * Integer.parseInt(itemValue);
-                                            prodPrise.setText("₹ " + totalPrice);
+                                            if (key.equals(itemValue)) {
+                                                prodSpePrise.setText("₹ " + value);
+                                                break;
+                                            } else {
+                                                int totalPrice = Math.round(Float.parseFloat(spe_price)) * Integer.parseInt(itemValue);
+                                                prodSpePrise.setText("₹ " + Math.round(totalPrice));
+                                            }
                                         }
+                                    } else {
+                                        int totalPrice =  Math.round(Float.parseFloat(spe_price)) * Integer.parseInt(itemValue);
+                                        prodSpePrise.setText("₹ " + Math.round(totalPrice));
                                     }
-                                } else {
-                                    int totalPrice = Integer.parseInt(price) * Integer.parseInt(itemValue);
-                                    prodPrise.setText("₹ " + totalPrice);
-                                }
-                                dialog.dismiss();
-                            } else {
-                                etQtyDialog.setError("Minimum quantity is 1");
-                            }
 
-                        } else {
-                            etQtyDialog.setError("Enter Quantity");
+                                    dialog.dismiss();
+                                } else {
+                                    etQtyDialog.setError("Minimum quantity is 1");
+                                }
+
+                            } else {
+                                etQtyDialog.setError("Enter Quantity");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            dialog.dismiss();
+                            Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -536,8 +544,16 @@ public class FragProdDesc extends Fragment {
                                     }
 
                                     if (curr.getString("attribute_code").equals("special_price")) {
-                                        String spe_price = curr.getString("value");
-                                        prodPrise.setText("₹ " + spe_price);
+                                        spe_price = curr.getString("value");
+
+                                        if (price.equals(spe_price)) {
+                                            prodSpePrise.setText("₹ " + price);
+                                        } else {
+                                            prodPrise.setVisibility(View.VISIBLE);
+                                            prodPrise.setText("₹ " + price);
+                                            prodSpePrise.setText("  ₹ " + spe_price);
+                                            prodPrise.setPaintFlags(prodPrise.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                                        }
                                     }
                                 }
 
@@ -566,7 +582,7 @@ public class FragProdDesc extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Product not available", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });
@@ -666,6 +682,10 @@ public class FragProdDesc extends Fragment {
                                 String group_id = reader.getString("group_id");
                                 String email = reader.getString("email");
 
+                                if (!(reader.has("default_shipping"))){
+                                    llDeliverTo.setVisibility(View.GONE);
+                                }
+
                                 JSONArray items = reader.getJSONArray("addresses");
 
                                 if (items.length() > 0) {
@@ -674,7 +694,7 @@ public class FragProdDesc extends Fragment {
                                         JSONObject address = items.getJSONObject(i);
 
                                         try {
-                                            default_shipping = address.getString("default_billing");
+                                            default_shipping = address.getString("default_shipping");
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                             default_shipping = "false";
@@ -855,6 +875,7 @@ public class FragProdDesc extends Fragment {
                                     if (response.contains("item_id")) {
 
                                         Toast.makeText(getActivity(), "Added successfully", Toast.LENGTH_SHORT).show();
+                                        ((Drower) getActivity()).getCartCount();
                                     } else if (response.contains("message")) {
                                         JSONObject reader = null;
                                         try {
@@ -872,7 +893,7 @@ public class FragProdDesc extends Fragment {
 
                                     if (response.contains("item_id")) {
                                         myDialog.dismiss();
-
+                                        ((Drower) getActivity()).getCartCount();
                                         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragDrower, new FragCart(), "SOMETAG").addToBackStack("Indo").commit();
 
                                     } else if (response.contains("message")) {
@@ -946,7 +967,7 @@ public class FragProdDesc extends Fragment {
                             }
 
                         } catch (JSONException e) {
-                                e.printStackTrace();
+                            e.printStackTrace();
                         }
 
                         myDialog.dismiss();

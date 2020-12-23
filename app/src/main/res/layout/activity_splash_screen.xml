@@ -10,6 +10,6 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/splashscreen"/>
+        android:background="@drawable/splashscreen"/>
 
 </android.support.constraint.ConstraintLayout>

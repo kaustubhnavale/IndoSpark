@@ -60,7 +60,7 @@ public class AllProducts extends AppCompatActivity {
         if (CheckNetwork.isInternetAvailable(this)) {
             getAllProd();
         } else {
-            Toast.makeText(this, "Internet Connection not available", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Internet Connection not available.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -222,7 +222,7 @@ public class AllProducts extends AppCompatActivity {
                             getSupportFragmentManager().beginTransaction().replace(R.id.fragDrower, fragobj, "SOMETAG").addToBackStack("Indo").commit();
 
                         } else {
-                            Toast.makeText(AllProducts.this, "Something wen't wrong", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AllProducts.this, "Something wen't wrong.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -233,46 +233,5 @@ public class AllProducts extends AppCompatActivity {
         public int getItemCount() {
             return mUsers == null ? 0 : mUsers.size();
         }
-    }
-
-
-    //* ********************************   cart count on action bar ************************************
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.cartmenu, menu);
-        MenuItem item = menu.findItem(R.id.badge);
-        MenuItemCompat.setActionView(item, R.layout.cartcount);
-        RelativeLayout notifCount = (RelativeLayout) MenuItemCompat.getActionView(item);
-
-        ImageView cartImage = (ImageView) notifCount.findViewById(R.id.cartImage);
-
-        TextView tv = (TextView) notifCount.findViewById(R.id.actionbar_notifcation_textview);
-        tv.setText("12");
-
-        cartImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(AllProducts.this, "Cart", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.badge) {
-
-            //do whatever you want to do here.
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

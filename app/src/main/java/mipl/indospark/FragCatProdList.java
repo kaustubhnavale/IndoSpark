@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -39,12 +40,14 @@ public class FragCatProdList extends Fragment {
     ProgressDialog myDialog;
     private List<ProdPojo> mUsers = new ArrayList<>();
 
-    private RecyclerView mRecyclerView;
+//    private RecyclerView mRecyclerView;
     private UserAdapter mUserAdapter;
     LinearLayout llEmptyCategory;
 
     String price;
     String catID;
+
+    ShimmerRecyclerView mRecyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +57,9 @@ public class FragCatProdList extends Fragment {
 
         llEmptyCategory = (LinearLayout) v.findViewById(R.id.llEmptyCategory);
 
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.my_recycler_view);
+//        mRecyclerView = (RecyclerView) v.findViewById(R.id.my_recycler_view);
+
+        mRecyclerView = (ShimmerRecyclerView)  v.findViewById(R.id.my_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         Bundle bundle = this.getArguments();
@@ -67,7 +72,7 @@ public class FragCatProdList extends Fragment {
         if (CheckNetwork.isInternetAvailable(getActivity())) {
             getAllProd();
         } else {
-            Toast.makeText(getActivity(), "Internet Connection not available", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Internet Connection not available.", Toast.LENGTH_SHORT).show();
         }
 
         return v;
@@ -75,7 +80,7 @@ public class FragCatProdList extends Fragment {
 
     public void getAllProd() {
 
-        myDialog = commonVariables.showProgressDialog(getActivity(), "Getting Products ...");
+//        myDialog = commonVariables.showProgressDialog(getActivity(), "Getting Products ...");
 
         stringRequest = new StringRequest(Request.Method.POST, "https://shop.indospark.com/android_api/get_categories_products.php",
                 new Response.Listener<String>() {
@@ -138,10 +143,12 @@ public class FragCatProdList extends Fragment {
                                     }
 
                                     if (mUsers.size() > 0) {
+                                        mRecyclerView.showShimmerAdapter();
                                         mUserAdapter = new UserAdapter();
                                         mRecyclerView.setAdapter(mUserAdapter);
                                     } else {
                                         llEmptyCategory.setVisibility(View.VISIBLE);
+                                        mRecyclerView.showShimmerAdapter();
                                         mRecyclerView.setVisibility(View.GONE);
                                     }
 
@@ -154,14 +161,14 @@ public class FragCatProdList extends Fragment {
                                 e.printStackTrace();
                             }
                         }
-                        myDialog.dismiss();
+//                        myDialog.dismiss();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
                 Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                myDialog.dismiss();
+//                myDialog.dismiss();
             }
         }) {
             @Override
@@ -265,7 +272,7 @@ public class FragCatProdList extends Fragment {
                                     .addToBackStack(FragProdDesc.class.getCanonicalName()).commit();
 
                         } else {
-                            Toast.makeText(getActivity(), "Something wen't wrong", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Something wen't wrong!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

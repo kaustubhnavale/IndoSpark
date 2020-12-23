@@ -17,15 +17,27 @@
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:layout_weight="9"
+            android:orientation="horizontal"
+            android:weightSum="10"
             android:background="@color/white">
 
             <TextView
+                android:layout_weight="2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="Address Book"
                 android:textColor="@color/textcolor"
                 android:textSize="18dp" />
+
+            <ImageView
+                android:id="@+id/ivDefAddAddress"
+                android:layout_margin="10dp"
+                android:layout_weight="8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/add_address"
+                android:gravity="center" />
 
         </LinearLayout>
 

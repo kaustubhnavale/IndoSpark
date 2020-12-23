@@ -201,12 +201,16 @@ public class FragCart extends Fragment {
                                             String sku = address.getString("sku");
                                             int qty = address.getInt("qty");
                                             String name = address.getString("name");
-                                            int price = address.getInt("price");
+                                            int price = Math.round(address.getInt("discount_price"));
                                             String quote_id = address.getString("quote_id");
                                             String product_image = address.getString("product_image");
 
-                                            String subTotal = String.valueOf(price * qty);
-                                            orderTotal = orderTotal + Integer.parseInt(subTotal);
+                                            try {
+                                                subTotal = price * qty;
+                                                orderTotal = orderTotal + subTotal;
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
 
                                             ProdPojo user = new ProdPojo();
                                             user.setIda(item_id);
@@ -215,7 +219,7 @@ public class FragCart extends Fragment {
                                             user.setName(name);
                                             user.setPrice(String.valueOf(price));
                                             user.setQuoteID(quote_id);
-                                            user.setSubTotal(subTotal);
+                                            user.setSubTotal(String.valueOf(subTotal));
                                             user.setImageValue(product_image);
 
                                             mUsers.add(user);
@@ -452,6 +456,7 @@ public class FragCart extends Fragment {
 
                                 myDialog.dismiss();
                                 getCartList();
+                                ((Drower) getActivity()).getCartCount();
 
                             } else {
                                 Toast.makeText(getActivity(), "Invalid Coupon", Toast.LENGTH_SHORT).show();
@@ -511,6 +516,7 @@ public class FragCart extends Fragment {
                             if (status.equals("200")) {
                                 Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
                                 getCartList();
+                                ((Drower) getActivity()).getCartCount();
 
                             } else if (status.equals("500")) {
                                 Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
@@ -577,8 +583,7 @@ public class FragCart extends Fragment {
                                 Toast.makeText(getActivity(), "Invalid Coupon", Toast.LENGTH_SHORT).show();
                             }
 
-                        } catch (
-                                JSONException e) {
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
 

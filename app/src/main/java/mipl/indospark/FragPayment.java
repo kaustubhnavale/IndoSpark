@@ -27,6 +27,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -123,29 +125,27 @@ public class FragPayment extends Fragment {
                         myDialogPlaceOrder.dismiss();
 
                         try {
-                            if (response.contains("message")) {
-
-                            }
-
-                            String[] separated = response.split("\"");
+                            /*String[] separated = response.split("\"");
                             payID = separated[1];
 //                            String status = separated[2];
 
-                            get_RSA_key();
+                            get_RSA_key();*/
 
-                            /*if (status.equals("1")) {
-//                                placePayment(payID);
-//                                wvPayPage.loadUrl("http://shop.indospark.com/android_api/paypage.php?order_id=" + payID);
+                            JSONObject reader = new JSONObject(response);
+                            String status = reader.getString("status");
+                            payID = reader.getString("order_id");
+
+                            if (status.equals("1")) {
                                 get_RSA_key();
 
                             } else {
-                                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Error!", Toast.LENGTH_SHORT).show();
                                 getActivity().getSupportFragmentManager().popBackStack();
-                            }*/
+                            }
 
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Error!", Toast.LENGTH_SHORT).show();
                             getActivity().getSupportFragmentManager().popBackStack();
                         }
                     }
@@ -191,7 +191,7 @@ public class FragPayment extends Fragment {
                             wvPayPage.loadData(html, mimeType, encoding);
 
                         } else {
-                            Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Error!", Toast.LENGTH_SHORT).show();
                         }
 
                         myDialog.dismiss();
@@ -239,6 +239,7 @@ public class FragPayment extends Fragment {
                                 show_alert(vResponse);
                             } else {
                                 new RenderView().execute();   // Calling async task to get display content
+                                ((Drower) getActivity()).getCartCount();
                             }
                         }
                         else

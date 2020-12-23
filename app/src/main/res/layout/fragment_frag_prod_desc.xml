@@ -127,23 +127,35 @@
                     android:layout_margin="3dp">
 
                     <RelativeLayout
+                        android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="10dp">
 
                         <TextView
+                            android:text="123"
+                            android:visibility="gone"
                             android:id="@+id/prodPrise"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="#b3b3b3"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/prodSpePrise"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/prodPrise"
+                            android:text="100"
                             android:textColor="@color/themecolor"
-                            android:textSize="18dp" />
+                            android:textSize="15dp" />
 
                         <TextView
                             android:id="@+id/prodQty"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="35dp"
-                            android:layout_toRightOf="@+id/prodPrise"
+                            android:layout_toRightOf="@+id/prodSpePrise"
                             android:background="@drawable/borderlayout"
                             android:text="QTY"
                             android:textColor="@color/themecolor"

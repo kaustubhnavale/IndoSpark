@@ -63,7 +63,7 @@ public class Registration extends AppCompatActivity {
                     if (CheckNetwork.isInternetAvailable(Registration.this)) {
                         sendRegistration();
                     } else {
-                        Toast.makeText(Registration.this, "Not connected to internet", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Registration.this, "Not connected to internet.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     status = true;
@@ -123,7 +123,7 @@ public class Registration extends AppCompatActivity {
                                                 }).show();
 
                                     } else {
-                                        Toast.makeText(Registration.this, "Error", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Registration.this, "Error!", Toast.LENGTH_SHORT).show();
                                     }
 
                                 } catch (JSONException e) {
@@ -131,7 +131,7 @@ public class Registration extends AppCompatActivity {
                                 }
 
                             } else if (status.equals("500")) {
-                                Toast.makeText(Registration.this, "Error", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Registration.this, "Error!", Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (JSONException e) {

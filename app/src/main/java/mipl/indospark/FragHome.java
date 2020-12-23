@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -56,6 +58,9 @@ public class FragHome extends Fragment {
     private List<ProdPojo> mUsers = new ArrayList<>();
     Dialog toolbarSearchDialog;
 
+    ShimmerRecyclerView shimmerRecycler;
+    ScrollView svProductView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,15 +73,20 @@ public class FragHome extends Fragment {
         rlSearch = (RelativeLayout) v.findViewById(R.id.rlSearch);
         llNoInternet = (LinearLayout) v.findViewById(R.id.llNoInternet);
 
-        my_recycler_view = (RecyclerView) v.findViewById(R.id.my_recycler_view1);
-        my_recycler_view.setHasFixedSize(true);
+//        my_recycler_view = (RecyclerView) v.findViewById(R.id.my_recycler_view1);
+//        my_recycler_view.setHasFixedSize(true);
+
+        shimmerRecycler = (ShimmerRecyclerView)  v.findViewById(R.id.shimmer_recycler_view);
+        svProductView = (ScrollView)  v.findViewById(R.id.svProductView);
 
         if (CheckNetwork.isInternetAvailable(getActivity())) {
             getCategoryandProduct();
+            ((Drower) getActivity()).getCartCount();
         } else {
-            Toast.makeText(getActivity(), "Internet connection not available", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Internet connection not available.", Toast.LENGTH_SHORT).show();
             llNoInternet.setVisibility(View.VISIBLE);
-            my_recycler_view.setVisibility(View.GONE);
+            shimmerRecycler.setVisibility(View.GONE);
+            svProductView.setVisibility(View.GONE);
         }
 
         rlSearch.setOnClickListener(new View.OnClickListener() {
@@ -86,12 +96,28 @@ public class FragHome extends Fragment {
             }
         });
 
+        /*shimmerRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 || dy < 0)
+                    ((Drower) getActivity()).hideFloatingActionButton();
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                    ((Drower) getActivity()).showFloatingActionButton();
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });*/
+
         return v;
     }
 
     public void getCategoryandProduct() {
 
-        myDialog = commonVariables.showProgressDialog(getActivity(), "Loading ...");
+//        myDialog = commonVariables.showProgressDialog(getActivity(), "Loading ...");
 
         stringRequest = new StringRequest(Request.Method.GET, "https://shop.indospark.com/android_api/get_homepage_products.php",
                 new Response.Listener<String>() {
@@ -157,23 +183,27 @@ public class FragHome extends Fragment {
                                     allSampleData.add(dm);
 //                                    }
                                 }
+                                shimmerRecycler.showShimmerAdapter();
 
                                 adapter = new RecyclerViewDataAdapter(getActivity(), allSampleData);
-                                my_recycler_view.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-                                my_recycler_view.setAdapter(adapter);
+                                /*my_recycler_view.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                                my_recycler_view.setAdapter(adapter);*/
+
+                                shimmerRecycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                                shimmerRecycler.setAdapter(adapter);
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
-                        myDialog.dismiss();
+//                        myDialog.dismiss();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
                 Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                myDialog.dismiss();
+//                myDialog.dismiss();
             }
         });
 
@@ -227,7 +257,7 @@ public class FragHome extends Fragment {
                     if (CheckNetwork.isInternetAvailable(getActivity())) {
                         searchProduct(edtToolSearch.getText().toString());
                     } else {
-                        Toast.makeText(getActivity(), "Internet connection not available", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Internet connection not available.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -434,7 +464,7 @@ public class FragHome extends Fragment {
                             toolbarSearchDialog.dismiss();
 
                         } else {
-                            Toast.makeText(getActivity(), "Something wen't wrong", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Something wen't wrong!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

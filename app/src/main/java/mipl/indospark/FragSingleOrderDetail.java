@@ -96,9 +96,8 @@ public class FragSingleOrderDetail extends Fragment {
         if (CheckNetwork.isInternetAvailable(getActivity())) {
             getAllProd();
         } else {
-            Toast.makeText(getActivity(), "Internet Connection not available", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Internet Connection not available.", Toast.LENGTH_SHORT).show();
         }
-
 
         return v;
     }
@@ -112,33 +111,45 @@ public class FragSingleOrderDetail extends Fragment {
                     @Override
                     public void onResponse(String response) {
 
+                        String entity_id = "";
+
                         if (response.length() > 0) {
                             if (response.contains("No Previous  records")) {
 
                             } else {
                                 try {
                                     /*for (int i = 0; i < myOrder.length(); i++) {*/
+
                                     JSONObject curr = new JSONObject(response);
+                                    try {
+                                        String orderID = curr.getString("increment_id");
+                                        tvOrderID.setText(orderID);
 
-                                    String orderID = curr.getString("increment_id");
-                                    String status = curr.getString("status");
-                                    String entity_id = curr.getString("entity_id");
-                                    String created_at = curr.getString("created_at");
-                                    String grand_total = curr.getString("grand_total");
-                                    String updated_at = curr.getString("updated_at");
-                                    String subtotal = curr.getString("subtotal");
-                                    String shipping_amount = curr.getString("shipping_amount");
-                                    String shipping_description = curr.getString("shipping_description");
+                                        String status = curr.getString("status");
+                                        tvOrderStatus.setText(status);
 
-                                    tvOrderID.setText(orderID);
-                                    tvOrderDate.setText(created_at);
-                                    tvOrderStatus.setText(status);
-                                    tvShippingMethod.setText(shipping_description);
-                                    tvOrderStatusUpdateOn.setText(updated_at);
+                                        entity_id = curr.getString("entity_id");
+                                        String created_at = curr.getString("created_at");
+                                        tvOrderDate.setText(created_at);
 
-                                    tvShippingCharges.setText(shipping_amount);
-                                    tvCartSubTotal.setText(subtotal);
-                                    tvOrderTotla.setText(grand_total);
+                                        String grand_total = curr.getString("grand_total");
+                                        tvOrderTotla.setText(grand_total);
+
+                                        String updated_at = curr.getString("updated_at");
+                                        tvOrderStatusUpdateOn.setText(updated_at);
+
+                                        String subtotal = curr.getString("subtotal");
+                                        tvCartSubTotal.setText(subtotal);
+
+                                        String shipping_amount = curr.getString("shipping_amount");
+                                        tvShippingCharges.setText(shipping_amount);
+
+                                        String shipping_description = curr.getString("shipping_description");
+                                        tvShippingMethod.setText(shipping_description);
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
 
                                     JSONObject extension_attributes = curr.getJSONObject("extension_attributes");
                                     JSONArray shipping_assignments = extension_attributes.getJSONArray("shipping_assignments");
@@ -146,9 +157,10 @@ public class FragSingleOrderDetail extends Fragment {
                                     for (int j = 0; j < shipping_assignments.length(); j++) {
                                         JSONObject shipping = shipping_assignments.getJSONObject(j);
                                         JSONObject shipping1 = shipping.getJSONObject("shipping");
-                                        JSONObject address = shipping1.getJSONObject("address");
 
                                         try {
+                                            JSONObject address = shipping1.getJSONObject("address");
+
                                             String firstname = address.getString("firstname");
                                             String lastname = address.getString("lastname");
                                             tvSName.setText(firstname + " " + lastname);

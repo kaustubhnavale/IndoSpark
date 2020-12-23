@@ -40,14 +40,15 @@
 
         <!-- Badge Count -->
         <TextView
-            android:background="@drawable/borderlayout"
-            android:id="@+id/actionbar_notifcation_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/badge_border"
+            android:id="@+id/tvBadge"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:gravity="center"
             android:layout_alignParentRight="true"
-            android:text="99"
-            android:textSize="12dp"
-            android:textColor="@color/white" />
+            android:textSize="8dp"
+            android:textColor="@color/themecolor" />
 
     </RelativeLayout>
 </LinearLayout>

@@ -6,24 +6,39 @@
     android:background="@color/backGrey"
     tools:context=".FragCatProdList">
 
-    <android.support.v7.widget.RecyclerView
+    <!--<android.support.v7.widget.RecyclerView
         android:visibility="gone"
         android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
         android:layout_weight="1"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical" />-->
 
-    <LinearLayout
-        android:visibility="gone"
-        android:layout_margin="10dp"
-        android:background="@color/white"
-        android:id="@+id/llEmptyCategory"
-        android:gravity="center"
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <com.cooltechworks.views.shimmer.ShimmerRecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/my_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:shimmer_demo_angle="20"
+            app:shimmer_demo_child_count="10"
+            app:shimmer_demo_grid_child_count="1"
+            app:shimmer_demo_layout_manager_type="linear_vertical" />
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/llEmptyCategory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="150dp"
@@ -32,21 +47,21 @@
             android:src="@drawable/emptycarticon" />
 
         <TextView
-            android:gravity="center"
-            android:textColor="#000000"
-            android:textSize="18dp"
-            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Unfortunately, No products found in these category"/>
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="Unfortunately, No products found in these category"
+            android:textColor="#000000"
+            android:textSize="18dp" />
 
         <TextView
-            android:gravity="center"
-            android:textSize="16dp"
-            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Please search in another category"/>
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="Please search in another category"
+            android:textSize="16dp" />
 
     </LinearLayout>
 </FrameLayout>

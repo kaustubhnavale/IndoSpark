@@ -26,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,6 +51,8 @@ public class FragAddList extends Fragment {
     SharedPreferences sharedpreferences;
     String token, addType;
 
+    ShimmerRecyclerView shimmerRecycler;
+
     public FragAddList() {
         // Required empty public constructor
     }
@@ -69,8 +72,11 @@ public class FragAddList extends Fragment {
 
         tvAddNewAddress = (TextView) v.findViewById(R.id.tvAddNewAddress);
 
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.rvAddList);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        shimmerRecycler = (ShimmerRecyclerView)  v.findViewById(R.id.rvAddList);
+        shimmerRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+//        mRecyclerView = (RecyclerView) v.findViewById(R.id.rvAddList);
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         mUsers = new ArrayList<>();
 
@@ -94,7 +100,7 @@ public class FragAddList extends Fragment {
     }
 
     public void getAddList() {
-        myDialog = commonVariables.showProgressDialog(getActivity(), "Getting Addresses ...");
+//        myDialog = commonVariables.showProgressDialog(getActivity(), "Getting Addresses ...");
         mUsers.clear();
 
         stringRequest = new StringRequest(Request.Method.POST, "https://shop.indospark.com/android_api/get_all_address.php",
@@ -173,10 +179,13 @@ public class FragAddList extends Fragment {
                                         mUsers.add(user);
 
                                         mUserAdapter = new UserAdapter();
-                                        mRecyclerView.setAdapter(mUserAdapter);
+//                                        mRecyclerView.setAdapter(mUserAdapter);
+
+                                        shimmerRecycler.showShimmerAdapter();
+                                        shimmerRecycler.setAdapter(mUserAdapter);
                                     }
                                 } else {
-                                    Toast.makeText(getActivity(), "No Address Added", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "No Address Added yet.", Toast.LENGTH_SHORT).show();
                                 }
 
                             } catch (JSONException e) {
@@ -184,14 +193,14 @@ public class FragAddList extends Fragment {
                             }
                         }
 
-                        myDialog.dismiss();
+//                        myDialog.dismiss();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
                 Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                myDialog.dismiss();
+//                myDialog.dismiss();
             }
         }) {
 
@@ -237,8 +246,8 @@ public class FragAddList extends Fragment {
         private final int VIEW_TYPE_LOADING = 1;
 
         public UserAdapter() {
-            final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
-            mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) shimmerRecycler.getLayoutManager();
+            shimmerRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
@@ -343,7 +352,7 @@ public class FragAddList extends Fragment {
                             String status = reader.getString("status");
 
                             if (status.equals("500")) {
-                                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Error!", Toast.LENGTH_SHORT).show();
                             } else if (status.equals("200")) {
                                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragDrower, new FragAddList(), "SOMETAG").commit();
                             }

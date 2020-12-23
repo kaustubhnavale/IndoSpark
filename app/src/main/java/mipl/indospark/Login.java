@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,15 +40,16 @@ public class Login extends AppCompatActivity {
     LinearLayout llForgotPassword, llLogin;
 
     SharedPreferences sharedpreferences;
+    String refreshedToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         getSupportActionBar().hide();
 
         sharedpreferences = getSharedPreferences(commonVariables.mypreference, Context.MODE_PRIVATE);
+        refreshedToken = FirebaseInstanceId.getInstance().getToken();
 
         if (sharedpreferences.contains(commonVariables.token)) {
             startActivity(new Intent(this, Drower.class));
@@ -85,7 +87,7 @@ public class Login extends AppCompatActivity {
                             if (CheckNetwork.isInternetAvailable(Login.this)) {
                                 sendLogin();
                             } else {
-                                Toast.makeText(Login.this, "Not connected to internet", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Login.this, "Not connected to internet.", Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             etUserNme.setError("Enter valid user name");
@@ -117,7 +119,7 @@ public class Login extends AppCompatActivity {
 
                             forgetPassword();
                         } else {
-                            Toast.makeText(Login.this, "Not connected to internet", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this, "Not connected to internet.", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         etForgotMail.setError("Enter valid user name");
@@ -145,7 +147,7 @@ public class Login extends AppCompatActivity {
                             String status = reader.getString("status");
 
                             if (status.equals("500")) {
-                                Toast.makeText(Login.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Login.this, "Invalid username or password.", Toast.LENGTH_SHORT).show();
                                 String msg = reader.getString("message");
                             } else if (status.equals("200")) {
                                 String token = reader.getString("token");
@@ -166,6 +168,7 @@ public class Login extends AppCompatActivity {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Toast.makeText(Login.this, "Invalid username or password.", Toast.LENGTH_SHORT).show();
                         }
                         myDialog.dismiss();
                     }

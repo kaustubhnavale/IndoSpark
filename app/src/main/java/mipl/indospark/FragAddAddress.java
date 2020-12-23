@@ -119,7 +119,7 @@ public class FragAddAddress extends Fragment {
                             }
                         }
                     } else {
-                        Toast.makeText(getActivity(), "Not connected to Internet", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Not connected to Internet.", Toast.LENGTH_LONG).show();
                     }
                 } else {
                     validation = true;
@@ -145,7 +145,7 @@ public class FragAddAddress extends Fragment {
                             String status = reader.getString("status");
 
                             if (status.equals("500")) {
-                                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Error!", Toast.LENGTH_SHORT).show();
                             } else if (status.equals("200")) {
                                 if (AddID.equals("New")) {
 
@@ -231,7 +231,7 @@ public class FragAddAddress extends Fragment {
                             String status = reader.getString("status");
 
                             if (status.equals("500")) {
-                                Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Error!", Toast.LENGTH_SHORT).show();
                             } else if (status.equals("200")) {
                                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragDrower, new FragAddList(), "SOMETAG").addToBackStack("Indo").commit();
                             }

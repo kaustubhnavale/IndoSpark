@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "234776221616",
+    "firebase_url": "https://indospark-568a4.firebaseio.com",
+    "project_id": "indospark-568a4",
+    "storage_bucket": "indospark-568a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234776221616:android:0a34cef89b5044aa6de875",
+        "android_client_info": {
+          "package_name": "mipl.indospark"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234776221616-70s9mtdaqrls4pmqqjtif7prrf033pcn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mipl.indospark",
+            "certificate_hash": "b6f5c0b590f6ffdafa8d6aa4d8144b89f695de13"
+          }
+        },
+        {
+          "client_id": "234776221616-qa77ug0e7briiq5205oupso0d124ru67.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByoVlL4D3H3R51FZ-czFcVO7-A50A8gWY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "234776221616-qa77ug0e7briiq5205oupso0d124ru67.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

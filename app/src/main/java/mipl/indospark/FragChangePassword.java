@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -71,7 +73,7 @@ public class FragChangePassword extends Fragment {
 
     public void updatePassword() {
 
-        myDialog= commonVariables.showProgressDialog(getActivity(),"Updating ...");
+        myDialog = commonVariables.showProgressDialog(getActivity(), "Updating ...");
 
         stringRequest = new StringRequest(Request.Method.POST, "https://shop.indospark.com/android_api/change_password.php",
                 new Response.Listener<String>() {
@@ -79,15 +81,18 @@ public class FragChangePassword extends Fragment {
                     public void onResponse(String response) {
 
                         try {
+                            JSONArray ja = new JSONArray(response);
+                            response = ja.getString(0);
+
                             if (response.contains("The password doesn't match this account")) {
                                 Toast.makeText(getActivity(), "The password doesn't match this account", Toast.LENGTH_SHORT).show();
-                            } else if (response.equals("true1")) {
+                            } else if (response.contains("true")) {
                                 Toast.makeText(getActivity(), "Password successfully updated", Toast.LENGTH_SHORT).show();
                                 getActivity().getSupportFragmentManager().popBackStack();
                             } else {
                                 Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
                             }
-                        } catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
 
@@ -134,13 +139,13 @@ public class FragChangePassword extends Fragment {
             status = false;
             tvConfirmPassword.setText("");
         }
-        if (!(tvNewPassword.getText().toString().length() == 6) && !isValidPassword(tvNewPassword.getText().toString())) {
+        /*if (!(tvNewPassword.getText().toString().length() == 6) && !isValidPassword(tvNewPassword.getText().toString())) {
             Toast.makeText(getActivity(), "Enter at least 1 number, 1 lower case character, 1 upper case character, and 1 special symbol", Toast.LENGTH_SHORT).show();
             tvNewPassword.requestFocus();
             status = false;
             tvNewPassword.setText("");
             tvConfirmPassword.setText("");
-        }
+        }*/
         return status;
     }
 

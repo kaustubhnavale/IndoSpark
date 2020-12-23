@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +38,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Drower extends AppCompatActivity {
 
@@ -51,9 +53,13 @@ public class Drower extends AppCompatActivity {
     HashMap<String, String> catID;
 
     StringRequest stringRequest;
+    TextView tvBadge;
 
     TextView tvLoginName;
+    String token;
+    int cartQty = 0;
     SharedPreferences sharedpreferences;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +70,7 @@ public class Drower extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragDrower, new FragHome(), "SOMETAG").commit();
 
         sharedpreferences = getSharedPreferences(commonVariables.mypreference, Context.MODE_PRIVATE);
+        token = sharedpreferences.getString(commonVariables.token, "");
 
         heading2 = new ArrayList<String>();
         catID = new HashMap<String, String>();
@@ -107,6 +114,7 @@ public class Drower extends AppCompatActivity {
 
         ImageView drower = (ImageView) view.findViewById(R.id.drower);
         ImageView cartImage = (ImageView) view.findViewById(R.id.cartImage);
+        tvBadge = (TextView) view.findViewById(R.id.tvBadge);
 
         drower.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +143,24 @@ public class Drower extends AppCompatActivity {
         });
 
         allSampleData = new ArrayList<ProdPojo>();
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Drower.this, WebViewPages.class);
+                i.putExtra("WebView", "Live Chat");
+                startActivity(i);
+            }
+        });
     }
+
+    public void hideFloatingActionButton() {
+        fab.hide();
+    };
+    public void showFloatingActionButton() {
+        fab.show();
+    };
 
     private void prepareListData() {
         listDataHeader = new ArrayList<ExpandedMenuModel>();
@@ -171,9 +196,9 @@ public class Drower extends AppCompatActivity {
             item5.setIconName("Enquiry");
             listDataHeader.add(item5);
 
-            ExpandedMenuModel item6 = new ExpandedMenuModel();
+            /*ExpandedMenuModel item6 = new ExpandedMenuModel();
             item6.setIconName("Register With Us");
-            listDataHeader.add(item6);
+            listDataHeader.add(item6);*/
 
             ExpandedMenuModel item7 = new ExpandedMenuModel();
             item7.setIconName("Address Book");
@@ -343,5 +368,64 @@ public class Drower extends AppCompatActivity {
                 }
             }).show();
         }
+    }
+
+    public void getCartCount() {
+
+        cartQty = 0;
+        stringRequest = new StringRequest(Request.Method.POST, "https://shop.indospark.com/android_api/get_cart_items.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        if (response.length() > 0) {
+                            try {
+                                JSONArray reader = new JSONArray(response);
+
+                                if (reader.length() > 0) {
+
+                                    for (int i = 0; i < reader.length(); i++) {
+                                        JSONObject address = reader.getJSONObject(i);
+
+                                        String item_id = address.getString("item_id");
+
+                                        if (item_id.equals("null")) {
+
+                                        } else {
+
+                                            int qty = address.getInt("qty");
+                                            cartQty = cartQty + qty;
+                                        }
+                                    }
+                                }
+                                tvBadge.setText(String.valueOf(cartQty));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                tvBadge.setText(String.valueOf(cartQty));
+                            }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", token);
+                return params;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                3,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        RequestQueue requestQueue = Volley.newRequestQueue(Drower.this);
+        requestQueue.add(stringRequest);
     }
 }

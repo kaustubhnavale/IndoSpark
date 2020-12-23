@@ -23,11 +23,15 @@
     <include layout="@layout/content_drower" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fab1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        app:borderWidth="0dp"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:background="@color/blue"
+        android:backgroundTint="@color/blue"
+        app:maxImageSize="56dp"
+        app:srcCompat="@drawable/livechat_icon" />
 
 </android.support.design.widget.CoordinatorLayout>

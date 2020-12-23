@@ -43,8 +43,7 @@
                     android:layout_weight="1.4"
                     android:text="Product Name"
                     android:textColor="@color/textcolor"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
+                    android:textSize="14dp" />
 
                 <WebView
                     android:visibility="gone"
